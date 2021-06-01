@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_covid19_final/src/routes/app_routes.dart';
 import 'package:flutter_covid19_final/src/views/home.dart';
 import 'package:flutter_covid19_final/src/views/logo.dart';
+import 'package:flutter_covid19_final/src/views/news_global.dart';
 import 'package:flutter_covid19_final/src/views/splashscreen.dart';
 
 void main() {
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
           AppRoutes.LOGO: (_) => Logo(),
           AppRoutes.SPLASHSCREEN: (_) => Splashscreen(),
           AppRoutes.HOME: (_) => Home(),
+          AppRoutes.NEWS_GLOBAL: (_) => NewsGlobal(),
         },
       ),
     );

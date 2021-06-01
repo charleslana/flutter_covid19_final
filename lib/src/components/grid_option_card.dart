@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_covid19_final/src/models/grid_home.dart';
+import 'package:flutter_covid19_final/src/routes/app_routes.dart';
 
 class GridOptionCard extends StatelessWidget {
   final GridHome option;
@@ -10,31 +11,34 @@ class GridOptionCard extends StatelessWidget {
     return Container(
       child: Card(
         color: Color(option.backgroundColor),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                option.pathImage,
-                fit: BoxFit.contain,
-                height: 100,
-              ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: Text(
-                    option.title.toUpperCase(),
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Color(option.color),
+        child: InkWell(
+          onTap: () => Navigator.of(context).pushNamed(AppRoutes.NEWS_GLOBAL),
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  option.pathImage,
+                  fit: BoxFit.contain,
+                  height: 100,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: Text(
+                      option.title.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: Color(option.color),
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
