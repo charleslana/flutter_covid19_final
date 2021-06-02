@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_covid19_final/src/models/container_list.dart';
+import 'package:flutter_covid19_final/src/routes/app_routes.dart';
 
 class ContainerOptionCard extends StatelessWidget {
   final ContainerList option;
@@ -16,7 +17,10 @@ class ContainerOptionCard extends StatelessWidget {
           ),
         ),
         child: InkWell(
-          onTap: () => print('clicked'),
+          onTap: () => Navigator.of(context).pushNamed(
+            AppRoutes.SHOW_NEWS,
+            arguments: option,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -38,8 +42,18 @@ class ContainerOptionCard extends StatelessWidget {
                       ),
               ),
               ListTile(
-                title: Text(option.title),
-                subtitle: Text(option.subTitle),
+                title: Text(
+                  option.title,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  softWrap: false,
+                ),
+                subtitle: Text(
+                  option.subTitle,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  softWrap: false,
+                ),
               ),
             ],
           ),

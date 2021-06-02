@@ -8,4 +8,5 @@ class AppRoutes {
   static const GUIDELINES_OMS = '/guidelines-oms';
   static const CARE_WELL_BEING = '/care-well-being';
   static const VACCINATION = '/vaccination';
+  static const SHOW_NEWS = '/show-news';
 }

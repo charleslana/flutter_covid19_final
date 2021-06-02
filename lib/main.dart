@@ -7,6 +7,7 @@ import 'package:flutter_covid19_final/src/views/indexes.dart';
 import 'package:flutter_covid19_final/src/views/logo.dart';
 import 'package:flutter_covid19_final/src/views/news_global.dart';
 import 'package:flutter_covid19_final/src/views/news_local.dart';
+import 'package:flutter_covid19_final/src/views/show_news.dart';
 import 'package:flutter_covid19_final/src/views/splashscreen.dart';
 import 'package:flutter_covid19_final/src/views/vaccination.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         title: 'FlutterBirds - Notícias e Informações Covid19',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          fontFamily: 'Abel',
         ),
         routes: {
           AppRoutes.LOGO: (_) => Logo(),
@@ -34,6 +36,7 @@ class MyApp extends StatelessWidget {
           AppRoutes.GUIDELINES_OMS: (_) => GuidelinesOms(),
           AppRoutes.CARE_WELL_BEING: (_) => CareWellBeing(),
           AppRoutes.VACCINATION: (_) => Vaccination(),
+          AppRoutes.SHOW_NEWS: (_) => ShowNews(),
         },
       ),
     );
