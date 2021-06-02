@@ -12,7 +12,7 @@ class GridOptionCard extends StatelessWidget {
       child: Card(
         color: Color(option.backgroundColor),
         child: InkWell(
-          onTap: () => Navigator.of(context).pushNamed(AppRoutes.NEWS_GLOBAL),
+          onTap: () => Navigator.of(context).pushNamed(option.route),
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
