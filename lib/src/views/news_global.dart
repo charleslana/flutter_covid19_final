@@ -22,15 +22,12 @@ class _NewsGlobalState extends State<NewsGlobal> {
           backgroundColor: Color(0xff37b8ae),
           title: Text(title),
           leading: IconButton(
-            icon: Image.asset('images/icons/noticias_globais.png'),
-            tooltip: 'Ir para a página inicial',
-            onPressed: () => {
-              print('appbar clicked'),
-            },
+            icon: Image.asset('images/icons/news_global.png'),
+            onPressed: () => {},
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.search),
+              icon: Image.asset('images/menu/search.png'),
               tooltip: 'Pesquisar',
               onPressed: () => {
                 print('appbar clicked'),
