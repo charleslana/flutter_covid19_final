@@ -33,12 +33,12 @@ class ContainerOptionCard extends StatelessWidget {
                     ? Image.network(
                         option.urlImage,
                         height: 150,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       )
                     : Image.asset(
                         'images/others/news_blank.png',
                         height: 150,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
               ),
               ListTile(

@@ -57,58 +57,56 @@ class _ShowNewsState extends State<ShowNews> {
             option: _showData['route']!,
           ),
         ),
-        body: Column(
-          children: [
-            Container(
-              height: 200,
-              width: double.infinity,
-              child: _showData['urlImage'] != ''
-                  ? Image.network(
-                      _showData['urlImage']!,
-                      fit: BoxFit.cover,
-                      height: double.infinity,
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                    )
-                  : Image.asset(
-                      'images/others/news_blank.png',
-                      fit: BoxFit.cover,
-                      height: double.infinity,
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                    ),
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  'Fonte: ${_showData['source']}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      _showData['subTitle']!,
-                      style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 20,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 200,
+                width: double.infinity,
+                child: _showData['urlImage'] != ''
+                    ? Image.network(
+                        _showData['urlImage']!,
+                        fit: BoxFit.cover,
+                        height: double.infinity,
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                      )
+                    : Image.asset(
+                        'images/others/news_blank.png',
+                        fit: BoxFit.cover,
+                        height: double.infinity,
+                        width: double.infinity,
+                        alignment: Alignment.center,
                       ),
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    'Fonte: ${_showData['source']}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10,
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    _showData['subTitle']!,
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
