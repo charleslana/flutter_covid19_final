@@ -11,7 +11,7 @@ class NewsGlobal extends StatefulWidget {
 
 class _NewsGlobalState extends State<NewsGlobal> {
   final height = AppBar().preferredSize.height;
-  final Map<String, ContainerList> _options = {...DATA_NEWS};
+  final Map<String, ContainerList> _options = {...DATA_NEWS_GLOBAL};
   final title = 'Notícias Globais'.toUpperCase();
 
   @override
