@@ -14,10 +14,11 @@ class _ShowNewsState extends State<ShowNews> {
   final Map<String, String> _showData = {};
 
   void _loadShowData(ContainerList option) {
-    _showData['title'] = option.title;
+    _showData['title'] = option.title.toUpperCase();
     _showData['subTitle'] = option.subTitle;
     _showData['urlImage'] = option.urlImage;
     _showData['source'] = option.source;
+    _showData['route'] = option.route;
   }
 
   @override
@@ -52,20 +53,30 @@ class _ShowNewsState extends State<ShowNews> {
         ),
         bottomNavigationBar: SizedBox(
           height: height,
-          child: Menu(),
+          child: Menu(
+            option: _showData['route']!,
+          ),
         ),
         body: Column(
           children: [
             Container(
               height: 200,
               width: double.infinity,
-              child: Image.network(
-                _showData['urlImage']!,
-                fit: BoxFit.cover,
-                height: double.infinity,
-                width: double.infinity,
-                alignment: Alignment.center,
-              ),
+              child: _showData['urlImage'] != ''
+                  ? Image.network(
+                      _showData['urlImage']!,
+                      fit: BoxFit.cover,
+                      height: double.infinity,
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                    )
+                  : Image.asset(
+                      'images/others/news_blank.png',
+                      fit: BoxFit.cover,
+                      height: double.infinity,
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                    ),
             ),
             Align(
               alignment: Alignment.topLeft,

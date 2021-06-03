@@ -12,7 +12,7 @@ class NewsGlobal extends StatefulWidget {
 class _NewsGlobalState extends State<NewsGlobal> {
   final height = AppBar().preferredSize.height;
   final Map<String, ContainerList> _options = {...DATA_NEWS};
-  final title = 'Notícias Globais';
+  final title = 'Notícias Globais'.toUpperCase();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,9 @@ class _NewsGlobalState extends State<NewsGlobal> {
         ),
         bottomNavigationBar: SizedBox(
           height: height,
-          child: Menu(),
+          child: Menu(
+            option: '/news-global',
+          ),
         ),
         body: ListView.builder(
           itemCount: _options.length,

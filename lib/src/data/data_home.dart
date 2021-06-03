@@ -25,7 +25,7 @@ const DATA_HOME = {
   ),
   '4': const GridHome(
     title: 'Orientações OMS',
-    pathImage: 'images/icons/guidlines_oms.png',
+    pathImage: 'images/icons/guidelines_oms.png',
     backgroundColor: 0xff0c5299,
     color: 0xffffffff,
     route: AppRoutes.GUIDELINES_OMS,
