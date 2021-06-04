@@ -16,31 +16,69 @@ class Indexes extends StatefulWidget {
 class _IndexesState extends State<Indexes> {
   final height = AppBar().preferredSize.height;
   final title = 'Índices'.toUpperCase();
-  final url =
+
+  final urlWorldWide = Uri.parse('https://disease.sh/v3/covid-19/all');
+  final urlHistory =
       Uri.parse('https://disease.sh/v3/covid-19/historical/all?lastdays=90');
-  late List<FlSpot> dataCases = [];
+
+  late String cases;
+  late List<FlSpot> casesGlobal = [];
+  late List<FlSpot> deathsGlobal = [];
+  late List<FlSpot> recoveredGlobal = [];
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _loadDataWorldWide();
   }
 
-  void _loadData() async {
+  void _loadDataWorldWide() async {
     try {
-      final response = await http.get(url);
+      final response = await http.get(urlWorldWide);
+      final data = json.decode(response.body);
+
+      NumberFormat formatter = NumberFormat('###,000');
+      cases = formatter.format(data['cases']).replaceAll(',', '.');
+
+      _loadDataHistory();
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  void _loadDataHistory() async {
+    try {
+      final response = await http.get(urlHistory);
       final listCases = json.decode(response.body);
 
-      Map<String, dynamic> data = listCases['cases'];
-      int count = 0;
-      // NumberFormat formatter = NumberFormat('###,000');
-      // double.parse(formatter.format(v).replaceAll(',', '.'));
+      Map<String, dynamic> dataCases = listCases['cases'];
 
-      data.forEach((k, v) {
-        dataCases.add(FlSpot(count.toDouble(), v));
-        count = count + 1;
+      late int count = 0;
+
+      dataCases.forEach((key, value) {
+        casesGlobal.add(FlSpot(count.toDouble(), value));
+        count++;
       });
+
+      Map<String, dynamic> dataDeaths = listCases['deaths'];
+
+      count = 0;
+
+      dataDeaths.forEach((key, value) {
+        deathsGlobal.add(FlSpot(count.toDouble(), value));
+        count++;
+      });
+
+      Map<String, dynamic> dataRecovered = listCases['recovered'];
+
+      count = 0;
+
+      dataRecovered.forEach((key, value) {
+        recoveredGlobal.add(FlSpot(count.toDouble(), value));
+        count++;
+      });
+
       setState(() {
         _isLoading = false;
       });
@@ -83,7 +121,7 @@ class _IndexesState extends State<Indexes> {
     return '';
   }
 
-  LineChartData sampleData1() {
+  LineChartData dataGlobal() {
     return LineChartData(
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(
@@ -109,9 +147,9 @@ class _IndexesState extends State<Indexes> {
             switch (value.toInt()) {
               case 10:
                 return _getLastMonth(60);
-              case 45:
+              case 50:
                 return _getLastMonth(30);
-              case 80:
+              case 90:
                 return _getLastMonth(0);
             }
             return '';
@@ -140,12 +178,12 @@ class _IndexesState extends State<Indexes> {
             return '';
           },
           margin: 8,
-          reservedSize: 30,
+          reservedSize: 35,
         ),
       ),
       borderData: FlBorderData(
         show: true,
-        border: const Border(
+        border: Border(
           bottom: BorderSide(
             color: Color(0xff4e4965),
             width: 4,
@@ -162,19 +200,19 @@ class _IndexesState extends State<Indexes> {
         ),
       ),
       minX: 0,
-      maxX: 90,
+      maxX: 100,
       maxY: 200000000,
       minY: 0,
-      lineBarsData: linesBarData1(),
+      lineBarsData: linesBarDataGlobal(),
     );
   }
 
-  List<LineChartBarData> linesBarData1() {
-    final lineChartBarData1 = LineChartBarData(
-      spots: dataCases,
+  List<LineChartBarData> linesBarDataGlobal() {
+    final lineChartBarDataCases = LineChartBarData(
+      spots: casesGlobal,
       isCurved: true,
       colors: [
-        const Color(0xff4af699),
+        Color(0xff4af699),
       ],
       barWidth: 5,
       isStrokeCapRound: true,
@@ -185,8 +223,43 @@ class _IndexesState extends State<Indexes> {
         show: false,
       ),
     );
+
+    final lineChartBarDataDeaths = LineChartBarData(
+      spots: deathsGlobal,
+      isCurved: true,
+      colors: [
+        const Color(0xffdb4437),
+      ],
+      barWidth: 8,
+      isStrokeCapRound: true,
+      dotData: FlDotData(
+        show: false,
+      ),
+      belowBarData: BarAreaData(show: false, colors: [
+        const Color(0x00aa4cfc),
+      ]),
+    );
+
+    final lineChartBarDataRecovered = LineChartBarData(
+      spots: recoveredGlobal,
+      isCurved: true,
+      colors: [
+        const Color(0xfff4b400),
+      ],
+      barWidth: 8,
+      isStrokeCapRound: true,
+      dotData: FlDotData(
+        show: false,
+      ),
+      belowBarData: BarAreaData(show: false, colors: [
+        const Color(0x00aa4cfc),
+      ]),
+    );
+
     return [
-      lineChartBarData1,
+      lineChartBarDataCases,
+      lineChartBarDataDeaths,
+      lineChartBarDataRecovered,
     ];
   }
 
@@ -260,7 +333,7 @@ class _IndexesState extends State<Indexes> {
                                 height: 4,
                               ),
                               Text(
-                                'Confirmados',
+                                'Global',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 32,
@@ -273,7 +346,7 @@ class _IndexesState extends State<Indexes> {
                                 height: 4,
                               ),
                               Text(
-                                'Global',
+                                'Legenda',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
@@ -287,10 +360,10 @@ class _IndexesState extends State<Indexes> {
                                 child: Padding(
                                   padding: EdgeInsets.only(
                                     right: 16.0,
-                                    left: 6.0,
+                                    left: 16.0,
                                   ),
                                   child: LineChart(
-                                    sampleData1(),
+                                    dataGlobal(),
                                     swapAnimationDuration:
                                         Duration(milliseconds: 250),
                                   ),

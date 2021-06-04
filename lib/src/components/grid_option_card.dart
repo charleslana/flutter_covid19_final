@@ -22,6 +22,7 @@ class GridOptionCard extends StatelessWidget {
                   option.pathImage,
                   fit: BoxFit.contain,
                   height: 100,
+                  alignment: Alignment.topCenter,
                 ),
                 Padding(
                   padding: EdgeInsets.all(10),

@@ -44,7 +44,7 @@ class _CareWellBeingState extends State<CareWellBeing> {
                     fit: BoxFit.cover,
                     height: double.infinity,
                     width: double.infinity,
-                    alignment: Alignment.center,
+                    alignment: Alignment.topCenter,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
