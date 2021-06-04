@@ -360,14 +360,17 @@ class _IndexesState extends State<Indexes> {
                                       ),
                                       child: Padding(
                                         padding: EdgeInsets.all(8.0),
-                                        child: Text(
-                                          'Causas',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
+                                        child: FittedBox(
+                                          fit: BoxFit.cover,
+                                          child: Text(
+                                            'Causas',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            textAlign: TextAlign.center,
                                           ),
-                                          textAlign: TextAlign.center,
                                         ),
                                       ),
                                     ),
@@ -385,14 +388,17 @@ class _IndexesState extends State<Indexes> {
                                       ),
                                       child: Padding(
                                         padding: EdgeInsets.all(8.0),
-                                        child: Text(
-                                          'Mortes',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
+                                        child: FittedBox(
+                                          fit: BoxFit.cover,
+                                          child: Text(
+                                            'Mortes',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            textAlign: TextAlign.center,
                                           ),
-                                          textAlign: TextAlign.center,
                                         ),
                                       ),
                                     ),
@@ -410,14 +416,17 @@ class _IndexesState extends State<Indexes> {
                                       ),
                                       child: Padding(
                                         padding: EdgeInsets.all(8.0),
-                                        child: Text(
-                                          'Recuperados',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
+                                        child: FittedBox(
+                                          fit: BoxFit.cover,
+                                          child: Text(
+                                            'Recuperados',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            textAlign: TextAlign.center,
                                           ),
-                                          textAlign: TextAlign.center,
                                         ),
                                       ),
                                     ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_covid19_final/src/models/grid_home.dart';
-import 'package:flutter_covid19_final/src/routes/app_routes.dart';
 
 class GridOptionCard extends StatelessWidget {
   final GridHome option;
