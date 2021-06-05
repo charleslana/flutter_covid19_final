@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_covid19_final/src/components/alert.dart';
 import 'package:flutter_covid19_final/src/components/menu.dart';
 import 'package:flutter_covid19_final/src/controllers/api_covid.dart';
 import 'package:flutter_covid19_final/src/utils/last_month.dart';
@@ -27,9 +28,26 @@ class _IndexesState extends State<Indexes> {
     _fetchDataCovid();
   }
 
+  _showDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Alert();
+      },
+    );
+  }
+
   _fetchDataCovid() async {
     cases = await ApiCovid().getDataWorldWide();
+    if (cases == null) {
+      return _showDialog();
+    }
+
     final dataHistory = await ApiCovid().getDataHistory();
+    if (cases == null) {
+      return _showDialog();
+    }
+
     casesGlobal = dataHistory[0];
     deathsGlobal = dataHistory[1];
     recoveredGlobal = dataHistory[2];
