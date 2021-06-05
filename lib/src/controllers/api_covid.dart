@@ -8,6 +8,8 @@ class ApiCovid {
   final urlWorldWide = Uri.parse('https://disease.sh/v3/covid-19/all');
   final urlHistory =
       Uri.parse('https://disease.sh/v3/covid-19/historical/all?lastdays=90');
+  final urlCountry =
+      Uri.parse('https://disease.sh/v3/covid-19/countries/brazil');
 
   late String casesAll;
   late String deathsAll;
@@ -16,6 +18,13 @@ class ApiCovid {
   late List<FlSpot> casesGlobal = [];
   late List<FlSpot> deathsGlobal = [];
   late List<FlSpot> recoveredGlobal = [];
+
+  late String casesBrazil;
+  late String deathsBrazil;
+  late String recoveredBrazil;
+  late String casesTodayBrazil;
+  late String deathsTodayBrazil;
+  late String recoveredTodayBrazil;
 
   Future<dynamic> getDataWorldWide() async {
     try {
@@ -73,6 +82,37 @@ class ApiCovid {
         casesGlobal,
         deathsGlobal,
         recoveredGlobal,
+      ];
+    } catch (error) {
+      return null;
+    }
+  }
+
+  Future<dynamic> getDataByCountry() async {
+    try {
+      final response = await http.get(urlCountry);
+      final data = json.decode(response.body);
+
+      NumberFormat formatter = NumberFormat('###,000');
+      casesBrazil = formatter.format(data['cases']).replaceAll(',', '.');
+      deathsBrazil = formatter.format(data['deaths']).replaceAll(',', '.');
+      recoveredBrazil =
+          formatter.format(data['recovered']).replaceAll(',', '.');
+
+      casesTodayBrazil =
+          formatter.format(data['todayCases']).replaceAll(',', '.');
+      deathsTodayBrazil =
+          formatter.format(data['todayDeaths']).replaceAll(',', '.');
+      recoveredTodayBrazil =
+          formatter.format(data['todayRecovered']).replaceAll(',', '.');
+
+      return [
+        casesBrazil,
+        deathsBrazil,
+        recoveredBrazil,
+        casesTodayBrazil,
+        deathsTodayBrazil,
+        recoveredTodayBrazil,
       ];
     } catch (error) {
       return null;

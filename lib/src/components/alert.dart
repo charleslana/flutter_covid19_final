@@ -18,7 +18,7 @@ class Alert extends StatelessWidget {
       ),
       content: SingleChildScrollView(
         child: Text(
-            'Olá, estamos com alguns problemas técnicos em nosso servidor, mas fique tranquilo em breve você poderá acessar novamente ;)'),
+            'Olá, estamos com alguns problemas técnicos, mas fique tranquilo em breve você poderá acessar novamente, caso o sistema não retorne verifique se sua aplicação está atualizada ;)'),
       ),
       actions: [
         TextButton(
