@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_covid19_final/src/components/menu.dart';
-import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
+import 'package:flutter_covid19_final/src/controllers/api_covid.dart';
+import 'package:flutter_covid19_final/src/utils/last_month.dart';
 
 class Indexes extends StatefulWidget {
   const Indexes({Key? key}) : super(key: key);
@@ -17,11 +15,7 @@ class _IndexesState extends State<Indexes> {
   final height = AppBar().preferredSize.height;
   final title = 'Índices'.toUpperCase();
 
-  final urlWorldWide = Uri.parse('https://disease.sh/v3/covid-19/all');
-  final urlHistory =
-      Uri.parse('https://disease.sh/v3/covid-19/historical/all?lastdays=90');
-
-  late String cases;
+  late String? cases;
   late List<FlSpot> casesGlobal = [];
   late List<FlSpot> deathsGlobal = [];
   late List<FlSpot> recoveredGlobal = [];
@@ -30,95 +24,18 @@ class _IndexesState extends State<Indexes> {
   @override
   void initState() {
     super.initState();
-    _loadDataWorldWide();
+    _fetchDataCovid();
   }
 
-  void _loadDataWorldWide() async {
-    try {
-      final response = await http.get(urlWorldWide);
-      final data = json.decode(response.body);
-
-      NumberFormat formatter = NumberFormat('###,000');
-      cases = formatter.format(data['cases']).replaceAll(',', '.');
-
-      _loadDataHistory();
-    } catch (error) {
-      print(error);
-    }
-  }
-
-  void _loadDataHistory() async {
-    try {
-      final response = await http.get(urlHistory);
-      final listCases = json.decode(response.body);
-
-      Map<String, dynamic> dataCases = listCases['cases'];
-
-      late int count = 0;
-
-      dataCases.forEach((key, value) {
-        casesGlobal.add(FlSpot(count.toDouble(), value));
-        count++;
-      });
-
-      Map<String, dynamic> dataDeaths = listCases['deaths'];
-
-      count = 0;
-
-      dataDeaths.forEach((key, value) {
-        deathsGlobal.add(FlSpot(count.toDouble(), value));
-        count++;
-      });
-
-      Map<String, dynamic> dataRecovered = listCases['recovered'];
-
-      count = 0;
-
-      dataRecovered.forEach((key, value) {
-        recoveredGlobal.add(FlSpot(count.toDouble(), value));
-        count++;
-      });
-
-      setState(() {
-        _isLoading = false;
-      });
-    } catch (error) {
-      print(error);
-    }
-  }
-
-  String _getLastMonth(int value) {
-    final String daysAgo =
-        DateFormat.M().format(DateTime.now().subtract(Duration(days: value)));
-
-    switch (daysAgo) {
-      case '1':
-        return 'Janeiro';
-      case '2':
-        return 'Fevereiro';
-      case '3':
-        return 'Março';
-      case '4':
-        return 'Abril';
-      case '5':
-        return 'Maio';
-      case '6':
-        return 'Junho';
-      case '7':
-        return 'Julho';
-      case '8':
-        return 'Agosto';
-      case '9':
-        return 'Setemebro';
-      case '10':
-        return 'Outubro';
-      case '11':
-        return 'Novembro';
-      case '12':
-        return 'Dezembro';
-    }
-
-    return '';
+  _fetchDataCovid() async {
+    cases = await ApiCovid().getDataWorldWide();
+    final dataHistory = await ApiCovid().getDataHistory();
+    casesGlobal = dataHistory[0];
+    deathsGlobal = dataHistory[1];
+    recoveredGlobal = dataHistory[2];
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   LineChartData dataGlobal() {
@@ -146,11 +63,11 @@ class _IndexesState extends State<Indexes> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 10:
-                return _getLastMonth(60);
+                return LastMonth().get(60);
               case 50:
-                return _getLastMonth(30);
+                return LastMonth().get(30);
               case 90:
-                return _getLastMonth(0);
+                return LastMonth().get(0);
             }
             return '';
           },
