@@ -44,7 +44,7 @@ class _IndexesState extends State<Indexes> {
     }
 
     final dataHistory = await ApiCovid().getDataHistory();
-    if (cases == null) {
+    if (dataHistory == null) {
       return _showDialog();
     }
 
