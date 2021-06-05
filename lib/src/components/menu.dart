@@ -5,15 +5,15 @@ class Menu extends StatelessWidget {
   final String option;
   const Menu({Key? key, required this.option}) : super(key: key);
 
+  _navigateToPage(BuildContext context, String route) {
+    final String? currentRoute = ModalRoute.of(context)!.settings.name;
+    if (currentRoute != route) {
+      Navigator.of(context).pushNamed(route);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    _navigateToPage(String route) {
-      final String? currentRoute = ModalRoute.of(context)!.settings.name;
-      if (currentRoute != route) {
-        Navigator.of(context).pushNamed(route);
-      }
-    }
-
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Color(0xff37b8ae),
@@ -21,7 +21,7 @@ class Menu extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           InkWell(
-            onTap: () => _navigateToPage(AppRoutes.NEWS_GLOBAL),
+            onTap: () => _navigateToPage(context, AppRoutes.NEWS_GLOBAL),
             child: option == AppRoutes.NEWS_GLOBAL
                 ? ShaderMask(
                     shaderCallback: (Rect bounds) {
@@ -45,7 +45,7 @@ class Menu extends StatelessWidget {
                   ),
           ),
           InkWell(
-            onTap: () => _navigateToPage(AppRoutes.NEWS_LOCAL),
+            onTap: () => _navigateToPage(context, AppRoutes.NEWS_LOCAL),
             child: option == AppRoutes.NEWS_LOCAL
                 ? ShaderMask(
                     shaderCallback: (Rect bounds) {
@@ -69,7 +69,7 @@ class Menu extends StatelessWidget {
                   ),
           ),
           InkWell(
-            onTap: () => _navigateToPage(AppRoutes.INDEXES),
+            onTap: () => _navigateToPage(context, AppRoutes.INDEXES),
             child: option == AppRoutes.INDEXES
                 ? ShaderMask(
                     shaderCallback: (Rect bounds) {
@@ -93,7 +93,7 @@ class Menu extends StatelessWidget {
                   ),
           ),
           InkWell(
-            onTap: () => _navigateToPage(AppRoutes.GUIDELINES_OMS),
+            onTap: () => _navigateToPage(context, AppRoutes.GUIDELINES_OMS),
             child: option == AppRoutes.GUIDELINES_OMS
                 ? ShaderMask(
                     shaderCallback: (Rect bounds) {
@@ -117,7 +117,7 @@ class Menu extends StatelessWidget {
                   ),
           ),
           InkWell(
-            onTap: () => _navigateToPage(AppRoutes.CARE_WELL_BEING),
+            onTap: () => _navigateToPage(context, AppRoutes.CARE_WELL_BEING),
             child: option == AppRoutes.CARE_WELL_BEING
                 ? ShaderMask(
                     shaderCallback: (Rect bounds) {
@@ -141,7 +141,7 @@ class Menu extends StatelessWidget {
                   ),
           ),
           InkWell(
-            onTap: () => _navigateToPage(AppRoutes.VACCINATION),
+            onTap: () => _navigateToPage(context, AppRoutes.VACCINATION),
             child: option == AppRoutes.VACCINATION
                 ? ShaderMask(
                     shaderCallback: (Rect bounds) {
