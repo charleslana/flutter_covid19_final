@@ -10,6 +10,8 @@ class ApiCovid {
       Uri.parse('https://disease.sh/v3/covid-19/historical/all?lastdays=90');
   final urlCountry =
       Uri.parse('https://disease.sh/v3/covid-19/countries/brazil');
+  final urlVaccines = Uri.parse(
+      'https://disease.sh/v3/covid-19/vaccine/coverage/countries?lastdays=1');
 
   late String casesAll;
   late String deathsAll;
@@ -25,6 +27,8 @@ class ApiCovid {
   late String casesTodayBrazil;
   late String deathsTodayBrazil;
   late String recoveredTodayBrazil;
+
+  late String vaccines;
 
   Future<dynamic> getDataWorldWide() async {
     try {
@@ -114,6 +118,24 @@ class ApiCovid {
         deathsTodayBrazil,
         recoveredTodayBrazil,
       ];
+    } catch (error) {
+      return null;
+    }
+  }
+
+  Future<dynamic> getDataVaccine() async {
+    try {
+      final response = await http.get(urlVaccines);
+      final data = json.decode(response.body);
+
+      Map<String, dynamic> dataVaccinesBrazil = data[27]['timeline'];
+
+      dataVaccinesBrazil.forEach((key, value) {
+        NumberFormat formatter = NumberFormat('###,000');
+        vaccines = formatter.format(value).replaceAll(',', '.');
+      });
+
+      return vaccines;
     } catch (error) {
       return null;
     }
