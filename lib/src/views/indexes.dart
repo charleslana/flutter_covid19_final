@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_covid19_final/src/components/alert.dart';
 import 'package:flutter_covid19_final/src/components/menu.dart';
 import 'package:flutter_covid19_final/src/controllers/api_covid.dart';
+import 'package:flutter_covid19_final/src/routes/app_routes.dart';
 import 'package:flutter_covid19_final/src/utils/last_month.dart';
 
 class Indexes extends StatefulWidget {
@@ -34,7 +35,7 @@ class _IndexesState extends State<Indexes> {
       builder: (BuildContext context) {
         return Alert();
       },
-    );
+    ).then((value) => Navigator.of(context).pushNamed(AppRoutes.HOME));
   }
 
   _fetchDataCovid() async {
