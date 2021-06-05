@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_covid19_final/src/components/alert.dart';
 import 'package:flutter_covid19_final/src/components/menu.dart';
 import 'package:flutter_covid19_final/src/controllers/api_covid.dart';
+import 'package:flutter_covid19_final/src/enum/indexes_filter.dart';
 import 'package:flutter_covid19_final/src/routes/app_routes.dart';
 import 'package:flutter_covid19_final/src/utils/last_month.dart';
 
@@ -17,11 +18,16 @@ class _IndexesState extends State<Indexes> {
   final height = AppBar().preferredSize.height;
   final title = 'Índices'.toUpperCase();
 
-  late String? cases;
+  late String casesAll;
+  late String deathsAll;
+  late String recoveredAll;
+
   late List<FlSpot> casesGlobal = [];
   late List<FlSpot> deathsGlobal = [];
   late List<FlSpot> recoveredGlobal = [];
   bool _isLoading = true;
+
+  IndexesFilter? _filter = IndexesFilter.globalGraphics;
 
   @override
   void initState() {
@@ -29,7 +35,7 @@ class _IndexesState extends State<Indexes> {
     _fetchDataCovid();
   }
 
-  _showDialog() {
+  _alert() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -39,14 +45,18 @@ class _IndexesState extends State<Indexes> {
   }
 
   _fetchDataCovid() async {
-    cases = await ApiCovid().getDataWorldWide();
-    if (cases == null) {
-      return _showDialog();
+    final dataWorldWide = await ApiCovid().getDataWorldWide();
+    if (dataWorldWide == null) {
+      return _alert();
     }
+
+    casesAll = dataWorldWide[0];
+    deathsAll = dataWorldWide[1];
+    recoveredAll = dataWorldWide[2];
 
     final dataHistory = await ApiCovid().getDataHistory();
     if (dataHistory == null) {
-      return _showDialog();
+      return _alert();
     }
 
     casesGlobal = dataHistory[0];
@@ -55,6 +65,54 @@ class _IndexesState extends State<Indexes> {
     setState(() {
       _isLoading = false;
     });
+  }
+
+  _changeFilter(IndexesFilter? value) {
+    setState(() {
+      _filter = value;
+    });
+    Navigator.of(context).pop();
+  }
+
+  _options() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Escolha um tipo de índice da covid-19.'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                RadioListTile<IndexesFilter>(
+                  title: const Text('Gráfico global'),
+                  value: IndexesFilter.globalGraphics,
+                  groupValue: _filter,
+                  onChanged: (IndexesFilter? value) {
+                    _changeFilter(value);
+                  },
+                ),
+                RadioListTile<IndexesFilter>(
+                  title: const Text('Números globais'),
+                  value: IndexesFilter.globalNumbers,
+                  groupValue: _filter,
+                  onChanged: (IndexesFilter? value) {
+                    _changeFilter(value);
+                  },
+                ),
+                RadioListTile<IndexesFilter>(
+                  title: const Text('Números em Brasil'),
+                  value: IndexesFilter.brazilData,
+                  groupValue: _filter,
+                  onChanged: (IndexesFilter? value) {
+                    _changeFilter(value);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   LineChartData dataGlobal() {
@@ -67,14 +125,15 @@ class _IndexesState extends State<Indexes> {
         handleBuiltInTouches: true,
       ),
       gridData: FlGridData(
-        show: false,
+        show: true,
+        drawHorizontalLine: true,
       ),
       titlesData: FlTitlesData(
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 32,
           getTextStyles: (value) => TextStyle(
-            color: Color(0xff72719b),
+            color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
@@ -94,7 +153,7 @@ class _IndexesState extends State<Indexes> {
         leftTitles: SideTitles(
           showTitles: true,
           getTextStyles: (value) => TextStyle(
-            color: Color(0xff75729e),
+            color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 14,
           ),
@@ -121,7 +180,7 @@ class _IndexesState extends State<Indexes> {
         show: true,
         border: Border(
           bottom: BorderSide(
-            color: Color(0xff4e4965),
+            color: Colors.white,
             width: 4,
           ),
           left: BorderSide(
@@ -212,11 +271,9 @@ class _IndexesState extends State<Indexes> {
           ),
           actions: [
             IconButton(
-              icon: Image.asset('images/menu/search.png'),
-              tooltip: 'Pesquisar',
-              onPressed: () => {
-                print('appbar clicked'),
-              },
+              icon: Icon(Icons.more_horiz, color: Colors.white),
+              tooltip: 'Opções',
+              onPressed: () => _options(),
             ),
           ],
         ),
@@ -230,172 +287,267 @@ class _IndexesState extends State<Indexes> {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: AspectRatio(
-                    aspectRatio: 0.99,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8.0),
-                        ),
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xff2c274c),
-                            Color(0xff46426c),
-                          ],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                        ),
-                      ),
-                      child: Stack(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              SizedBox(
-                                height: 37,
-                              ),
-                              Text(
-                                'Dados da Covid 19',
-                                style: TextStyle(
-                                  color: Color(0xff827daa),
-                                  fontSize: 18,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(
-                                height: 4,
-                              ),
-                              Text(
-                                'Global',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 2,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(
-                                height: 4,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    flex: 3,
-                                    child: Container(
-                                      margin: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(50.0),
-                                        border: Border.all(
-                                            color: Colors.transparent),
-                                        color: Color(0xff4af699),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: FittedBox(
-                                          fit: BoxFit.cover,
-                                          child: Text(
-                                            'Causas',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 3,
-                                    child: Container(
-                                      margin: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(50.0),
-                                        border: Border.all(
-                                            color: Colors.transparent),
-                                        color: Color(0xffdb4437),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: FittedBox(
-                                          fit: BoxFit.cover,
-                                          child: Text(
-                                            'Mortes',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 3,
-                                    child: Container(
-                                      margin: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(50.0),
-                                        border: Border.all(
-                                            color: Colors.transparent),
-                                        color: Color(0xfff4b400),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: FittedBox(
-                                          fit: BoxFit.cover,
-                                          child: Text(
-                                            'Recuperados',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 37,
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    right: 16.0,
-                                    left: 16.0,
-                                  ),
-                                  child: LineChart(
-                                    dataGlobal(),
-                                    swapAnimationDuration:
-                                        Duration(milliseconds: 250),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
+            : _filter == IndexesFilter.globalGraphics
+                ? SingleChildScrollView(
+                    child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: AspectRatio(
+                      aspectRatio: 0.99,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(0),
                           ),
-                        ],
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xff0c5299),
+                              Color(0xff0c5299),
+                            ],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                          ),
+                        ),
+                        child: Stack(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                SizedBox(
+                                  height: 37,
+                                ),
+                                Text(
+                                  'Dados da Covid 19',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Text(
+                                  'Global',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 2,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 3,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            width: 10,
+                                            height: 10,
+                                            margin: EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(2.0),
+                                              border: Border.all(
+                                                  color: Colors.transparent),
+                                              color: Color(0xff4af699),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                              'Causas',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            width: 10,
+                                            height: 10,
+                                            margin: EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(2.0),
+                                              border: Border.all(
+                                                  color: Colors.transparent),
+                                              color: Color(0xffdb4437),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                              'Mortes',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            width: 10,
+                                            height: 10,
+                                            margin: EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(2.0),
+                                              border: Border.all(
+                                                  color: Colors.transparent),
+                                              color: Color(0xfff4b400),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                              'Recuperados',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 37,
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      right: 16.0,
+                                      left: 16.0,
+                                    ),
+                                    child: LineChart(
+                                      dataGlobal(),
+                                      swapAnimationDuration:
+                                          Duration(milliseconds: 250),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
+                  ))
+                : _filter == IndexesFilter.globalNumbers
+                    ? CustomScrollView(
+                        primary: false,
+                        slivers: [
+                          SliverPadding(
+                            padding: EdgeInsets.all(20),
+                            sliver: SliverGrid.count(
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              crossAxisCount: 2,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text('Casos totais global'),
+                                      FittedBox(
+                                        fit: BoxFit.cover,
+                                        child: Text(
+                                          casesAll,
+                                          style: TextStyle(
+                                            fontSize: 40,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  color: Colors.green[100],
+                                ),
+                                Container(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text('Mortes totais global'),
+                                      FittedBox(
+                                        fit: BoxFit.cover,
+                                        child: Text(
+                                          deathsAll,
+                                          style: TextStyle(
+                                            fontSize: 40,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  color: Colors.red[200],
+                                ),
+                                Container(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text('Recuperados totais global'),
+                                      FittedBox(
+                                        fit: BoxFit.cover,
+                                        child: Text(
+                                          recoveredAll,
+                                          style: TextStyle(
+                                            fontSize: 40,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  color: Colors.yellow[300],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    : Text('Números no Brasil'),
       ),
     );
   }

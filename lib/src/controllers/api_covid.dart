@@ -9,17 +9,29 @@ class ApiCovid {
   final urlHistory =
       Uri.parse('https://disease.sh/v3/covid-19/historical/all?lastdays=90');
 
+  late String casesAll;
+  late String deathsAll;
+  late String recoveredAll;
+
   late List<FlSpot> casesGlobal = [];
   late List<FlSpot> deathsGlobal = [];
   late List<FlSpot> recoveredGlobal = [];
 
-  Future<String?> getDataWorldWide() async {
+  Future<dynamic> getDataWorldWide() async {
     try {
       final response = await http.get(urlWorldWide);
       final data = json.decode(response.body);
 
       NumberFormat formatter = NumberFormat('###,000');
-      return formatter.format(data['cases']).replaceAll(',', '.');
+      casesAll = formatter.format(data['cases']).replaceAll(',', '.');
+      deathsAll = formatter.format(data['deaths']).replaceAll(',', '.');
+      recoveredAll = formatter.format(data['recovered']).replaceAll(',', '.');
+
+      return [
+        casesAll,
+        deathsAll,
+        recoveredAll,
+      ];
     } catch (error) {
       return null;
     }
@@ -57,7 +69,11 @@ class ApiCovid {
         count++;
       });
 
-      return [casesGlobal, deathsGlobal, recoveredGlobal];
+      return [
+        casesGlobal,
+        deathsGlobal,
+        recoveredGlobal,
+      ];
     } catch (error) {
       return null;
     }
