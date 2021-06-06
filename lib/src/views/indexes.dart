@@ -8,6 +8,7 @@ import 'package:flutter_covid19_final/src/enum/indexes_filter.dart';
 import 'package:flutter_covid19_final/src/models/grid_indexes.dart';
 import 'package:flutter_covid19_final/src/routes/app_routes.dart';
 import 'package:flutter_covid19_final/src/utils/last_month.dart';
+import 'package:intl/intl.dart';
 
 class Indexes extends StatefulWidget {
   const Indexes({Key? key}) : super(key: key);
@@ -18,7 +19,9 @@ class Indexes extends StatefulWidget {
 
 class _IndexesState extends State<Indexes> {
   final height = AppBar().preferredSize.height;
-  final title = 'Índices'.toUpperCase();
+  final String getYear = DateFormat.y().format(DateTime.now());
+  final title = 'Índices '.toUpperCase();
+  final apiCovid = new ApiCovid();
 
   late List<String> dataAll = [];
   late List<String> dataBrazil = [];
@@ -49,14 +52,14 @@ class _IndexesState extends State<Indexes> {
   }
 
   _fetchDataCovid() async {
-    final dataWorldWide = await ApiCovid().getDataWorldWide();
+    final dataWorldWide = await apiCovid.getDataWorldWide();
     if (dataWorldWide == null) {
       return _alert();
     }
 
     dataWorldWide.forEach((value) => dataAll.add(value));
 
-    final dataHistory = await ApiCovid().getDataHistory();
+    final dataHistory = await apiCovid.getDataHistory();
     if (dataHistory == null) {
       return _alert();
     }
@@ -65,14 +68,14 @@ class _IndexesState extends State<Indexes> {
     deathsGlobal = dataHistory[1];
     recoveredGlobal = dataHistory[2];
 
-    final dataByCountry = await ApiCovid().getDataByCountry();
+    final dataByCountry = await apiCovid.getDataByCountry();
     if (dataByCountry == null) {
       return _alert();
     }
 
     dataByCountry.forEach((value) => dataBrazil.add(value));
 
-    final dataVaccinesBrazil = await ApiCovid().getDataVaccine();
+    final dataVaccinesBrazil = await apiCovid.getDataVaccine();
     if (dataVaccinesBrazil == null) {
       return _alert();
     }
@@ -142,6 +145,7 @@ class _IndexesState extends State<Indexes> {
   }
 
   LineChartData dataGlobal() {
+    final lastMonth = new LastMonth();
     return LineChartData(
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(
@@ -167,11 +171,11 @@ class _IndexesState extends State<Indexes> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 10:
-                return LastMonth().get(60);
+                return lastMonth.get(60);
               case 50:
-                return LastMonth().get(30);
+                return lastMonth.get(30);
               case 90:
-                return LastMonth().get(0);
+                return lastMonth.get(0);
             }
             return '';
           },
@@ -290,7 +294,7 @@ class _IndexesState extends State<Indexes> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xff37b8ae),
-          title: Text(title),
+          title: Text(title + getYear),
           leading: IconButton(
             icon: Image.asset('images/icons/indexes.png'),
             onPressed: () => {},
