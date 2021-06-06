@@ -19,7 +19,7 @@ class Indexes extends StatefulWidget {
 
 class _IndexesState extends State<Indexes> {
   final height = AppBar().preferredSize.height;
-  final String getYear = DateFormat.y().format(DateTime.now());
+  final getYear = DateFormat.y().format(DateTime.now());
   final title = 'Índices '.toUpperCase();
   final apiCovid = new ApiCovid();
 
