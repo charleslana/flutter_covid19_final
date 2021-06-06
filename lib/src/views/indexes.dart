@@ -2,8 +2,10 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_covid19_final/src/components/alert.dart';
 import 'package:flutter_covid19_final/src/components/menu.dart';
+import 'package:flutter_covid19_final/src/components/sliver_grid_container.dart';
 import 'package:flutter_covid19_final/src/controllers/api_covid.dart';
 import 'package:flutter_covid19_final/src/enum/indexes_filter.dart';
+import 'package:flutter_covid19_final/src/models/grid_indexes.dart';
 import 'package:flutter_covid19_final/src/routes/app_routes.dart';
 import 'package:flutter_covid19_final/src/utils/last_month.dart';
 
@@ -508,269 +510,69 @@ class _IndexesState extends State<Indexes> {
                     ),
                   ))
                 : _filter == IndexesFilter.globalNumbers
-                    ? CustomScrollView(
-                        primary: false,
+                    ? SliverGridContainer(
+                        count: 2,
                         slivers: [
-                          SliverPadding(
-                            padding: EdgeInsets.all(20),
-                            sliver: SliverGrid.count(
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                              crossAxisCount: 2,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(8),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text('Casos totais global'),
-                                      FittedBox(
-                                        fit: BoxFit.cover,
-                                        child: Text(
-                                          casesAll,
-                                          style: TextStyle(
-                                            fontSize: 40,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  color: Colors.green[100],
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(8),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text('Mortes totais global'),
-                                      FittedBox(
-                                        fit: BoxFit.cover,
-                                        child: Text(
-                                          deathsAll,
-                                          style: TextStyle(
-                                            fontSize: 40,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  color: Colors.red[200],
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(8),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text('Recuperados totais global'),
-                                      FittedBox(
-                                        fit: BoxFit.cover,
-                                        child: Text(
-                                          recoveredAll,
-                                          style: TextStyle(
-                                            fontSize: 40,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  color: Colors.yellow[300],
-                                ),
-                              ],
-                            ),
+                          GridIndexes(
+                            title: 'Casos totais global',
+                            text: casesAll,
+                            color: Colors.green[100],
+                          ),
+                          GridIndexes(
+                            title: 'Mortes totais global',
+                            text: deathsAll,
+                            color: Colors.red[200],
+                          ),
+                          GridIndexes(
+                            title: 'Recuperados totais global',
+                            text: recoveredAll,
+                            color: Colors.yellow[300],
                           ),
                         ],
                       )
                     : _filter == IndexesFilter.brazilData
-                        ? CustomScrollView(
-                            primary: false,
+                        ? SliverGridContainer(
+                            count: 2,
                             slivers: [
-                              SliverPadding(
-                                padding: EdgeInsets.all(20),
-                                sliver: SliverGrid.count(
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 10,
-                                  crossAxisCount: 2,
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(8),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text('Casos totais no Brasil'),
-                                          FittedBox(
-                                            fit: BoxFit.cover,
-                                            child: Text(
-                                              casesBrazil,
-                                              style: TextStyle(
-                                                fontSize: 40,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      color: Colors.green[100],
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.all(8),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text('Mortes totais no Brasil'),
-                                          FittedBox(
-                                            fit: BoxFit.cover,
-                                            child: Text(
-                                              deathsBrazil,
-                                              style: TextStyle(
-                                                fontSize: 40,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      color: Colors.red[200],
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.all(8),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text('Recuperados totais no Brasil'),
-                                          FittedBox(
-                                            fit: BoxFit.cover,
-                                            child: Text(
-                                              recoveredBrazil,
-                                              style: TextStyle(
-                                                fontSize: 40,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      color: Colors.yellow[300],
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.all(8),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                              'Casos totais no Brasil por dia'),
-                                          FittedBox(
-                                            fit: BoxFit.cover,
-                                            child: Text(
-                                              casesTodayBrazil,
-                                              style: TextStyle(
-                                                fontSize: 40,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      color: Colors.green[100],
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.all(8),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                              'Mortes totais no Brasil por dia'),
-                                          FittedBox(
-                                            fit: BoxFit.cover,
-                                            child: Text(
-                                              deathsTodayBrazil,
-                                              style: TextStyle(
-                                                fontSize: 40,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      color: Colors.red[200],
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.all(8),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                              'Recuperados totais no Brasil por dia'),
-                                          FittedBox(
-                                            fit: BoxFit.cover,
-                                            child: Text(
-                                              recoveredTodayBrazil,
-                                              style: TextStyle(
-                                                fontSize: 40,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      color: Colors.yellow[300],
-                                    ),
-                                  ],
-                                ),
+                              GridIndexes(
+                                title: 'Casos totais no Brasil',
+                                text: casesBrazil,
+                                color: Colors.green[100],
+                              ),
+                              GridIndexes(
+                                title: 'Mortes totais no Brasil',
+                                text: deathsBrazil,
+                                color: Colors.red[200],
+                              ),
+                              GridIndexes(
+                                title: 'Recuperados totais no Brasil',
+                                text: recoveredBrazil,
+                                color: Colors.yellow[300],
+                              ),
+                              GridIndexes(
+                                title: 'Casos totais no Brasil por dia',
+                                text: casesTodayBrazil,
+                                color: Colors.green[100],
+                              ),
+                              GridIndexes(
+                                title: 'Mortes totais no Brasil por dia',
+                                text: deathsTodayBrazil,
+                                color: Colors.red[200],
+                              ),
+                              GridIndexes(
+                                title: 'Recuperados totais no Brasil por dia',
+                                text: recoveredTodayBrazil,
+                                color: Colors.yellow[300],
                               ),
                             ],
                           )
-                        : CustomScrollView(
-                            primary: false,
+                        : SliverGridContainer(
+                            count: 1,
                             slivers: [
-                              SliverPadding(
-                                padding: EdgeInsets.all(20),
-                                sliver: SliverGrid.count(
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 10,
-                                  crossAxisCount: 1,
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(8),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text('Vacinas totais no Brasil'),
-                                          FittedBox(
-                                            fit: BoxFit.cover,
-                                            child: Text(
-                                              vaccinesBrazil,
-                                              style: TextStyle(
-                                                fontSize: 40,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      color: Colors.green[100],
-                                    ),
-                                  ],
-                                ),
+                              GridIndexes(
+                                title: 'Vacinas totais no Brasil',
+                                text: vaccinesBrazil,
+                                color: Colors.green[100],
                               ),
                             ],
                           ),
