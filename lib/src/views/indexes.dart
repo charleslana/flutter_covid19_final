@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_covid19_final/src/components/alert.dart';
+import 'package:flutter_covid19_final/src/components/alert_error.dart';
 import 'package:flutter_covid19_final/src/components/menu.dart';
 import 'package:flutter_covid19_final/src/components/sliver_grid_container.dart';
 import 'package:flutter_covid19_final/src/controllers/api_covid.dart';
@@ -20,20 +20,12 @@ class _IndexesState extends State<Indexes> {
   final height = AppBar().preferredSize.height;
   final title = 'Índices'.toUpperCase();
 
-  late String casesAll;
-  late String deathsAll;
-  late String recoveredAll;
+  late List<String> dataAll = [];
+  late List<String> dataBrazil = [];
 
   late List<FlSpot> casesGlobal = [];
   late List<FlSpot> deathsGlobal = [];
   late List<FlSpot> recoveredGlobal = [];
-
-  late String casesBrazil;
-  late String deathsBrazil;
-  late String recoveredBrazil;
-  late String casesTodayBrazil;
-  late String deathsTodayBrazil;
-  late String recoveredTodayBrazil;
 
   late String vaccinesBrazil;
 
@@ -51,7 +43,7 @@ class _IndexesState extends State<Indexes> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Alert();
+        return AlertError();
       },
     ).then((value) => Navigator.of(context).pushNamed(AppRoutes.HOME));
   }
@@ -62,9 +54,7 @@ class _IndexesState extends State<Indexes> {
       return _alert();
     }
 
-    casesAll = dataWorldWide[0];
-    deathsAll = dataWorldWide[1];
-    recoveredAll = dataWorldWide[2];
+    dataWorldWide.forEach((value) => dataAll.add(value));
 
     final dataHistory = await ApiCovid().getDataHistory();
     if (dataHistory == null) {
@@ -80,12 +70,7 @@ class _IndexesState extends State<Indexes> {
       return _alert();
     }
 
-    casesBrazil = dataByCountry[0];
-    deathsBrazil = dataByCountry[1];
-    recoveredBrazil = dataByCountry[2];
-    casesTodayBrazil = dataByCountry[3];
-    deathsTodayBrazil = dataByCountry[4];
-    recoveredTodayBrazil = dataByCountry[5];
+    dataByCountry.forEach((value) => dataBrazil.add(value));
 
     final dataVaccinesBrazil = await ApiCovid().getDataVaccine();
     if (dataVaccinesBrazil == null) {
@@ -515,17 +500,17 @@ class _IndexesState extends State<Indexes> {
                         slivers: [
                           GridIndexes(
                             title: 'Casos totais global',
-                            text: casesAll,
+                            text: dataAll[0],
                             color: Colors.green[100],
                           ),
                           GridIndexes(
                             title: 'Mortes totais global',
-                            text: deathsAll,
+                            text: dataAll[1],
                             color: Colors.red[200],
                           ),
                           GridIndexes(
                             title: 'Recuperados totais global',
-                            text: recoveredAll,
+                            text: dataAll[2],
                             color: Colors.yellow[300],
                           ),
                         ],
@@ -536,32 +521,32 @@ class _IndexesState extends State<Indexes> {
                             slivers: [
                               GridIndexes(
                                 title: 'Casos totais no Brasil',
-                                text: casesBrazil,
+                                text: dataBrazil[0],
                                 color: Colors.green[100],
                               ),
                               GridIndexes(
                                 title: 'Mortes totais no Brasil',
-                                text: deathsBrazil,
+                                text: dataBrazil[1],
                                 color: Colors.red[200],
                               ),
                               GridIndexes(
                                 title: 'Recuperados totais no Brasil',
-                                text: recoveredBrazil,
+                                text: dataBrazil[2],
                                 color: Colors.yellow[300],
                               ),
                               GridIndexes(
                                 title: 'Casos totais no Brasil por dia',
-                                text: casesTodayBrazil,
+                                text: dataBrazil[3],
                                 color: Colors.green[100],
                               ),
                               GridIndexes(
                                 title: 'Mortes totais no Brasil por dia',
-                                text: deathsTodayBrazil,
+                                text: dataBrazil[4],
                                 color: Colors.red[200],
                               ),
                               GridIndexes(
                                 title: 'Recuperados totais no Brasil por dia',
-                                text: recoveredTodayBrazil,
+                                text: dataBrazil[5],
                                 color: Colors.yellow[300],
                               ),
                             ],
