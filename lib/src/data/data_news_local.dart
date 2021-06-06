@@ -16,8 +16,10 @@ const DATA_NEWS_LOCAL = {
     route: '/news-local',
   ),
   '3': const ContainerList(
-    title: 'Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 ',
-    subTitle: 'Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 ',
+    title:
+        'Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 ',
+    subTitle:
+        'Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 ',
     urlImage: 'https://i.imgur.com/9cEvY6m.png',
     source: 'New Times',
     route: '/news-local',

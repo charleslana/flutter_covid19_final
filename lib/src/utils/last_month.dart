@@ -1,7 +1,6 @@
 import 'package:intl/intl.dart';
 
 class LastMonth {
-
   String get(int value) {
     final String daysAgo =
         DateFormat.M().format(DateTime.now().subtract(Duration(days: value)));

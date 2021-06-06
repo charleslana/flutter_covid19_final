@@ -101,7 +101,7 @@ class _IndexesState extends State<Indexes> {
             child: Column(
               children: [
                 RadioListTile<IndexesFilter>(
-                  title: const Text('Gráfico global'),
+                  title: Text('Gráfico global'),
                   value: IndexesFilter.globalGraphics,
                   groupValue: _filter,
                   onChanged: (IndexesFilter? value) {
@@ -109,7 +109,7 @@ class _IndexesState extends State<Indexes> {
                   },
                 ),
                 RadioListTile<IndexesFilter>(
-                  title: const Text('Números globais'),
+                  title: Text('Números globais'),
                   value: IndexesFilter.globalNumbers,
                   groupValue: _filter,
                   onChanged: (IndexesFilter? value) {
@@ -118,7 +118,7 @@ class _IndexesState extends State<Indexes> {
                 ),
                 Divider(),
                 RadioListTile<IndexesFilter>(
-                  title: const Text('Números em Brasil'),
+                  title: Text('Números no Brasil'),
                   value: IndexesFilter.brazilData,
                   groupValue: _filter,
                   onChanged: (IndexesFilter? value) {
@@ -126,7 +126,7 @@ class _IndexesState extends State<Indexes> {
                   },
                 ),
                 RadioListTile<IndexesFilter>(
-                  title: const Text('Vacinas em Brasil'),
+                  title: Text('Vacinas no Brasil'),
                   value: IndexesFilter.brazilVaccine,
                   groupValue: _filter,
                   onChanged: (IndexesFilter? value) {
@@ -249,7 +249,7 @@ class _IndexesState extends State<Indexes> {
       spots: deathsGlobal,
       isCurved: true,
       colors: [
-        const Color(0xffdb4437),
+        Color(0xffdb4437),
       ],
       barWidth: 8,
       isStrokeCapRound: true,
@@ -257,7 +257,7 @@ class _IndexesState extends State<Indexes> {
         show: false,
       ),
       belowBarData: BarAreaData(show: false, colors: [
-        const Color(0x00aa4cfc),
+        Color(0x00aa4cfc),
       ]),
     );
 
@@ -265,7 +265,7 @@ class _IndexesState extends State<Indexes> {
       spots: recoveredGlobal,
       isCurved: true,
       colors: [
-        const Color(0xfff4b400),
+        Color(0xfff4b400),
       ],
       barWidth: 8,
       isStrokeCapRound: true,
@@ -273,7 +273,7 @@ class _IndexesState extends State<Indexes> {
         show: false,
       ),
       belowBarData: BarAreaData(show: false, colors: [
-        const Color(0x00aa4cfc),
+        Color(0x00aa4cfc),
       ]),
     );
 
@@ -555,7 +555,7 @@ class _IndexesState extends State<Indexes> {
                             count: 1,
                             slivers: [
                               GridIndexes(
-                                title: 'Vacinas totais no Brasil',
+                                title: 'Vacinas efetivadas no Brasil',
                                 text: vaccinesBrazil,
                                 color: Colors.green[100],
                               ),

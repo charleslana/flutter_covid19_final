@@ -27,8 +27,8 @@ class Bubble extends StatelessWidget {
       crossAxisAlignment: align,
       children: [
         Container(
-          margin: const EdgeInsets.all(5.0),
-          padding: const EdgeInsets.all(8.0),
+          margin: EdgeInsets.all(5.0),
+          padding: EdgeInsets.all(8.0),
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(

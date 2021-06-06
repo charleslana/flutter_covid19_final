@@ -16,8 +16,10 @@ const DATA_VACCINATION = {
     route: '/vaccination',
   ),
   '3': const ContainerList(
-    title: 'Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 ',
-    subTitle: 'Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 ',
+    title:
+        'Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 ',
+    subTitle:
+        'Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 ',
     urlImage: 'https://i.imgur.com/LbZR7xZ.png',
     source: 'New Times',
     route: '/vaccination',

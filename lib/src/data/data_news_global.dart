@@ -16,8 +16,10 @@ const DATA_NEWS_GLOBAL = {
     route: '/news-global',
   ),
   '3': const ContainerList(
-    title: 'Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 ',
-    subTitle: 'Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 ',
+    title:
+        'Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 Novo título 3 ',
+    subTitle:
+        'Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 Descrevendo um subtítulo 3 ',
     urlImage: 'https://i.imgur.com/BMu6ydm.png',
     source: 'New Times',
     route: '/news-global',
