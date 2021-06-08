@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_covid19_final/src/components/menu.dart';
-import 'package:flutter_covid19_final/src/models/container_list.dart';
+import 'package:flutter_covid19_final/src/models/news.dart';
 
 class ShowNews extends StatefulWidget {
   const ShowNews({Key? key}) : super(key: key);
@@ -13,12 +13,16 @@ class _ShowNewsState extends State<ShowNews> {
   final height = AppBar().preferredSize.height;
   final Map<String, String> _showData = {};
 
-  void _loadShowData(ContainerList option) {
+  void _loadShowData(News option) {
     _showData['title'] = option.title.toUpperCase();
-    _showData['subTitle'] = option.subTitle;
+    _showData['subTitle'] = option.message;
     _showData['urlImage'] = option.urlImage;
     _showData['source'] = option.source;
-    _showData['route'] = option.route;
+    _showData['type'] = option.type == 'Global'
+        ? '/news-global'
+        : option.type == 'Local'
+            ? '/news-local'
+            : '/vaccination';
   }
 
   @override
@@ -28,7 +32,7 @@ class _ShowNewsState extends State<ShowNews> {
     final _option = ModalRoute.of(context)!.settings.arguments;
 
     if (_option != null) {
-      _loadShowData(_option as ContainerList);
+      _loadShowData(_option as News);
     }
   }
 
@@ -54,7 +58,7 @@ class _ShowNewsState extends State<ShowNews> {
         bottomNavigationBar: SizedBox(
           height: height,
           child: Menu(
-            option: _showData['route']!,
+            option: _showData['type']!,
           ),
         ),
         body: SingleChildScrollView(

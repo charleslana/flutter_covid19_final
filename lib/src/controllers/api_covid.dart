@@ -5,13 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 class ApiCovid {
-  final urlWorldWide = Uri.parse('https://disease.sh/v3/covid-19/all');
-  final urlHistory =
-      Uri.parse('https://disease.sh/v3/covid-19/historical/all?lastdays=90');
-  final urlCountry =
-      Uri.parse('https://disease.sh/v3/covid-19/countries/brazil');
-  final urlVaccines = Uri.parse(
-      'https://disease.sh/v3/covid-19/vaccine/coverage/countries?lastdays=1');
+  static const _baseUrl = 'https://disease.sh/v3/covid-19';
 
   late String casesAll;
   late String deathsAll;
@@ -32,7 +26,12 @@ class ApiCovid {
 
   Future<dynamic> getDataWorldWide() async {
     try {
-      final response = await http.get(urlWorldWide);
+      final response = await http.get(Uri.parse('$_baseUrl/all'));
+
+      if (response.statusCode != 200) {
+        return null;
+      }
+
       final data = json.decode(response.body);
 
       NumberFormat formatter = NumberFormat('###,000');
@@ -52,7 +51,13 @@ class ApiCovid {
 
   Future<dynamic> getDataHistory() async {
     try {
-      final response = await http.get(urlHistory);
+      final response =
+          await http.get(Uri.parse('$_baseUrl/historical/all?lastdays=90'));
+
+      if (response.statusCode != 200) {
+        return null;
+      }
+
       final listCases = json.decode(response.body);
 
       Map<String, dynamic> dataCases = listCases['cases'];
@@ -94,7 +99,12 @@ class ApiCovid {
 
   Future<dynamic> getDataByCountry() async {
     try {
-      final response = await http.get(urlCountry);
+      final response = await http.get(Uri.parse('$_baseUrl/countries/brazil'));
+
+      if (response.statusCode != 200) {
+        return null;
+      }
+
       final data = json.decode(response.body);
 
       NumberFormat formatter = NumberFormat('###,000');
@@ -125,7 +135,13 @@ class ApiCovid {
 
   Future<dynamic> getDataVaccine() async {
     try {
-      final response = await http.get(urlVaccines);
+      final response = await http
+          .get(Uri.parse('$_baseUrl/vaccine/coverage/countries?lastdays=1'));
+
+      if (response.statusCode != 200) {
+        return null;
+      }
+
       final data = json.decode(response.body);
 
       Map<String, dynamic> dataVaccinesBrazil = data[27]['timeline'];

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_covid19_final/src/models/container_list.dart';
+import 'package:flutter_covid19_final/src/models/news.dart';
 import 'package:flutter_covid19_final/src/routes/app_routes.dart';
 
 class ContainerOptionCard extends StatelessWidget {
-  final ContainerList option;
+  final News option;
   const ContainerOptionCard({Key? key, required this.option}) : super(key: key);
 
   @override
@@ -49,7 +49,7 @@ class ContainerOptionCard extends StatelessWidget {
                   softWrap: false,
                 ),
                 subtitle: Text(
-                  option.subTitle,
+                  option.message,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   softWrap: false,

@@ -301,7 +301,7 @@ class _IndexesState extends State<Indexes> {
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.more_horiz, color: Colors.white),
+              icon: Icon(Icons.more_vert, color: Colors.white),
               tooltip: 'Opções',
               onPressed: () => _options(),
             ),
@@ -539,17 +539,17 @@ class _IndexesState extends State<Indexes> {
                                 color: Colors.yellow[300],
                               ),
                               GridIndexes(
-                                title: 'Casos totais no Brasil por dia',
+                                title: 'Casos por dia no Brasil',
                                 text: dataBrazil[3],
                                 color: Colors.green[100],
                               ),
                               GridIndexes(
-                                title: 'Mortes totais no Brasil por dia',
+                                title: 'Mortes por dia no Brasil.',
                                 text: dataBrazil[4],
                                 color: Colors.red[200],
                               ),
                               GridIndexes(
-                                title: 'Recuperados totais no Brasil por dia',
+                                title: 'Recuperados por dia no Brasil.',
                                 text: dataBrazil[5],
                                 color: Colors.yellow[300],
                               ),

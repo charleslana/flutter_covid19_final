@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_covid19_final/src/components/alert_error.dart';
 import 'package:flutter_covid19_final/src/components/container_option_card.dart';
 import 'package:flutter_covid19_final/src/components/menu.dart';
-import 'package:flutter_covid19_final/src/data/data_news_global.dart';
-import 'package:flutter_covid19_final/src/models/container_list.dart';
+import 'package:flutter_covid19_final/src/controllers/api_news.dart';
+import 'package:flutter_covid19_final/src/models/news.dart';
+import 'package:flutter_covid19_final/src/routes/app_routes.dart';
 
 class NewsGlobal extends StatefulWidget {
   @override
@@ -11,8 +13,48 @@ class NewsGlobal extends StatefulWidget {
 
 class _NewsGlobalState extends State<NewsGlobal> {
   final height = AppBar().preferredSize.height;
-  final Map<String, ContainerList> _options = {...DATA_NEWS_GLOBAL};
+  Map<String, News> _options = {};
   final title = 'Notícias Globais'.toUpperCase();
+
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _getNews();
+  }
+
+  _alert() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertError();
+      },
+    ).then((value) => Navigator.of(context).pushNamed(AppRoutes.HOME));
+  }
+
+  Future<dynamic> _getNews() async {
+    final data = await ApiNews().getAll();
+    if (data == null) {
+      return _alert();
+    }
+    data.forEach((key, values) {
+      _options.putIfAbsent(
+        key as String,
+        () => News(
+          id: key,
+          title: values['title'],
+          message: values['message'],
+          urlImage: values['urlImage'],
+          source: values['source'],
+          type: values['type'],
+        ),
+      );
+    });
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +67,6 @@ class _NewsGlobalState extends State<NewsGlobal> {
             icon: Image.asset('images/icons/news_global.png'),
             onPressed: () => {},
           ),
-          actions: [
-            IconButton(
-              icon: Image.asset('images/menu/search.png'),
-              tooltip: 'Pesquisar',
-              onPressed: () => {
-                print('appbar clicked'),
-              },
-            ),
-          ],
         ),
         bottomNavigationBar: SizedBox(
           height: height,
@@ -41,14 +74,18 @@ class _NewsGlobalState extends State<NewsGlobal> {
             option: '/news-global',
           ),
         ),
-        body: ListView.builder(
-          itemCount: _options.length,
-          itemBuilder: (context, index) {
-            return ContainerOptionCard(
-              option: _options.values.elementAt(index),
-            );
-          },
-        ),
+        body: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView.builder(
+                itemCount: _options.length,
+                itemBuilder: (context, index) {
+                  return ContainerOptionCard(
+                    option: _options.values.elementAt(index),
+                  );
+                },
+              ),
       ),
     );
   }
