@@ -35,12 +35,12 @@ class Menu extends StatelessWidget {
                     },
                     blendMode: BlendMode.srcATop,
                     child: Image.asset(
-                      'images/menu/news_global.png',
+                      'assets/images/menu/news_global.png',
                       width: 40,
                     ),
                   )
                 : Image.asset(
-                    'images/menu/news_global.png',
+                    'assets/images/menu/news_global.png',
                     width: 40,
                   ),
           ),
@@ -59,12 +59,12 @@ class Menu extends StatelessWidget {
                     },
                     blendMode: BlendMode.srcATop,
                     child: Image.asset(
-                      'images/menu/news_local.png',
+                      'assets/images/menu/news_local.png',
                       width: 40,
                     ),
                   )
                 : Image.asset(
-                    'images/menu/news_local.png',
+                    'assets/images/menu/news_local.png',
                     width: 40,
                   ),
           ),
@@ -83,12 +83,12 @@ class Menu extends StatelessWidget {
                     },
                     blendMode: BlendMode.srcATop,
                     child: Image.asset(
-                      'images/menu/indexes.png',
+                      'assets/images/menu/indexes.png',
                       width: 40,
                     ),
                   )
                 : Image.asset(
-                    'images/menu/indexes.png',
+                    'assets/images/menu/indexes.png',
                     width: 40,
                   ),
           ),
@@ -107,12 +107,12 @@ class Menu extends StatelessWidget {
                     },
                     blendMode: BlendMode.srcATop,
                     child: Image.asset(
-                      'images/menu/guidelines_oms.png',
+                      'assets/images/menu/guidelines_oms.png',
                       width: 40,
                     ),
                   )
                 : Image.asset(
-                    'images/menu/guidelines_oms.png',
+                    'assets/images/menu/guidelines_oms.png',
                     width: 40,
                   ),
           ),
@@ -131,12 +131,12 @@ class Menu extends StatelessWidget {
                     },
                     blendMode: BlendMode.srcATop,
                     child: Image.asset(
-                      'images/menu/care_well_being.png',
+                      'assets/images/menu/care_well_being.png',
                       width: 40,
                     ),
                   )
                 : Image.asset(
-                    'images/menu/care_well_being.png',
+                    'assets/images/menu/care_well_being.png',
                     width: 40,
                   ),
           ),
@@ -155,12 +155,12 @@ class Menu extends StatelessWidget {
                     },
                     blendMode: BlendMode.srcATop,
                     child: Image.asset(
-                      'images/menu/vaccination.png',
+                      'assets/images/menu/vaccination.png',
                       width: 40,
                     ),
                   )
                 : Image.asset(
-                    'images/menu/vaccination.png',
+                    'assets/images/menu/vaccination.png',
                     width: 40,
                   ),
           ),

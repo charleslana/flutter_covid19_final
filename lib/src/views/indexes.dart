@@ -296,7 +296,7 @@ class _IndexesState extends State<Indexes> {
           backgroundColor: Color(0xff37b8ae),
           title: Text(title + getYear),
           leading: IconButton(
-            icon: Image.asset('images/icons/indexes.png'),
+            icon: Image.asset('assets/images/icons/indexes.png'),
             onPressed: () => {},
           ),
           actions: [

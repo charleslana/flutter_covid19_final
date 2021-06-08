@@ -66,7 +66,7 @@ class _NewsLocalState extends State<NewsLocal> {
           backgroundColor: Color(0xff37b8ae),
           title: Text(title),
           leading: IconButton(
-            icon: Image.asset('images/icons/news_local.png'),
+            icon: Image.asset('assets/images/icons/news_local.png'),
             onPressed: () => {},
           ),
         ),

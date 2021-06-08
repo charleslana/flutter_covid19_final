@@ -76,7 +76,7 @@ class _ShowNewsState extends State<ShowNews> {
                         alignment: Alignment.center,
                       )
                     : Image.asset(
-                        'images/others/news_blank.png',
+                        'assets/images/others/news_blank.png',
                         fit: BoxFit.cover,
                         height: double.infinity,
                         width: double.infinity,

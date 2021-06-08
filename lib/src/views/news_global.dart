@@ -64,7 +64,7 @@ class _NewsGlobalState extends State<NewsGlobal> {
           backgroundColor: Color(0xff37b8ae),
           title: Text(title),
           leading: IconButton(
-            icon: Image.asset('images/icons/news_global.png'),
+            icon: Image.asset('assets/images/icons/news_global.png'),
             onPressed: () => {},
           ),
         ),

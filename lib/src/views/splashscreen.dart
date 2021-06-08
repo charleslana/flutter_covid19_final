@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_covid19_final/src/components/rotated_corner.dart';
 import 'package:flutter_covid19_final/src/routes/app_routes.dart';
@@ -41,7 +40,7 @@ class _SplashscreenState extends State<Splashscreen> {
               children: [
                 SizedBox(
                   width: 200,
-                  child: Image.asset('images/logo/covid19.png'),
+                  child: Image.asset('assets/images/logo/covid19.png'),
                 ),
                 Padding(
                   padding: EdgeInsets.all(30),

@@ -20,7 +20,7 @@ class _CareWellBeingState extends State<CareWellBeing> {
           backgroundColor: Color(0xff37b8ae),
           title: Text(title),
           leading: IconButton(
-            icon: Image.asset('images/icons/care_well_being.png'),
+            icon: Image.asset('assets/images/icons/care_well_being.png'),
             onPressed: () => {},
           ),
         ),
@@ -40,7 +40,7 @@ class _CareWellBeingState extends State<CareWellBeing> {
                   semanticContainer: true,
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   child: Image.asset(
-                    'images/others/care_well_being.png',
+                    'assets/images/others/care_well_being.png',
                     fit: BoxFit.cover,
                     height: double.infinity,
                     width: double.infinity,

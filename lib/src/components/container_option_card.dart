@@ -36,7 +36,7 @@ class ContainerOptionCard extends StatelessWidget {
                         fit: BoxFit.cover,
                       )
                     : Image.asset(
-                        'images/others/news_blank.png',
+                        'assets/images/others/news_blank.png',
                         height: 150,
                         fit: BoxFit.cover,
                       ),

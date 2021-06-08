@@ -66,7 +66,7 @@ class _VaccinationState extends State<Vaccination> {
           backgroundColor: Color(0xff37b8ae),
           title: Text(title),
           leading: IconButton(
-            icon: Image.asset('images/icons/vaccination.png'),
+            icon: Image.asset('assets/images/icons/vaccination.png'),
             onPressed: () => {},
           ),
         ),

@@ -21,7 +21,7 @@ class _GuidelinesOmsState extends State<GuidelinesOms> {
           backgroundColor: Color(0xff37b8ae),
           title: Text(title),
           leading: IconButton(
-            icon: Image.asset('images/icons/guidelines_oms.png'),
+            icon: Image.asset('assets/images/icons/guidelines_oms.png'),
             onPressed: () => {},
           ),
         ),
@@ -66,7 +66,7 @@ class _GuidelinesOmsState extends State<GuidelinesOms> {
                       child: Align(
                         alignment: Alignment.center,
                         child: Image.asset(
-                          'images/others/people_right.png',
+                          'assets/images/others/people_right.png',
                           width: double.infinity,
                           height: 250,
                           fit: BoxFit.contain,
@@ -88,7 +88,7 @@ class _GuidelinesOmsState extends State<GuidelinesOms> {
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: Image.asset(
-                          'images/others/people_left.png',
+                          'assets/images/others/people_left.png',
                           width: double.infinity,
                           height: 250,
                           fit: BoxFit.contain,

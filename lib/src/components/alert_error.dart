@@ -22,7 +22,7 @@ class AlertError extends StatelessWidget {
       ),
       actions: [
         TextButton(
-          child: const Text('Ok'),
+          child: Text('Ok'),
           onPressed: () {
             Navigator.of(context).pop();
           },

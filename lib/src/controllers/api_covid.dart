@@ -1,11 +1,11 @@
 import 'dart:convert';
-
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter_covid19_final/src/utils/format_number.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 
 class ApiCovid {
   static const _baseUrl = 'https://disease.sh/v3/covid-19';
+  final formatNumber = new FormatNumber();
 
   late String casesAll;
   late String deathsAll;
@@ -34,10 +34,9 @@ class ApiCovid {
 
       final data = json.decode(response.body);
 
-      NumberFormat formatter = NumberFormat('###,000');
-      casesAll = formatter.format(data['cases']).replaceAll(',', '.');
-      deathsAll = formatter.format(data['deaths']).replaceAll(',', '.');
-      recoveredAll = formatter.format(data['recovered']).replaceAll(',', '.');
+      casesAll = formatNumber.get(data['cases']);
+      deathsAll = formatNumber.get(data['deaths']);
+      recoveredAll = formatNumber.get(data['recovered']);
 
       return [
         casesAll,
@@ -107,18 +106,13 @@ class ApiCovid {
 
       final data = json.decode(response.body);
 
-      NumberFormat formatter = NumberFormat('###,000');
-      casesBrazil = formatter.format(data['cases']).replaceAll(',', '.');
-      deathsBrazil = formatter.format(data['deaths']).replaceAll(',', '.');
-      recoveredBrazil =
-          formatter.format(data['recovered']).replaceAll(',', '.');
+      casesBrazil = formatNumber.get(data['cases']);
+      deathsBrazil = formatNumber.get(data['deaths']);
+      recoveredBrazil = formatNumber.get(data['recovered']);
 
-      casesTodayBrazil =
-          formatter.format(data['todayCases']).replaceAll(',', '.');
-      deathsTodayBrazil =
-          formatter.format(data['todayDeaths']).replaceAll(',', '.');
-      recoveredTodayBrazil =
-          formatter.format(data['todayRecovered']).replaceAll(',', '.');
+      casesTodayBrazil = formatNumber.get(data['todayCases']);
+      deathsTodayBrazil = formatNumber.get(data['todayDeaths']);
+      recoveredTodayBrazil = formatNumber.get(data['todayRecovered']);
 
       return [
         casesBrazil,
@@ -147,8 +141,7 @@ class ApiCovid {
       Map<String, dynamic> dataVaccinesBrazil = data[27]['timeline'];
 
       dataVaccinesBrazil.forEach((key, value) {
-        NumberFormat formatter = NumberFormat('###,000');
-        vaccines = formatter.format(value).replaceAll(',', '.');
+        vaccines = formatNumber.get(value);
       });
 
       return vaccines;
