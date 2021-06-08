@@ -81,3 +81,9 @@ flutter:
     - family: Abel
       fonts:
         - asset: assets/fonts/Abel-Regular.ttf
+      
+  assets:
+    - assets/images/icons/
+    - assets/images/logo/
+    - assets/images/menu/
+    - assets/images/others/

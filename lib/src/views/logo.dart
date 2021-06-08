@@ -21,7 +21,7 @@ class _LogoState extends State<Logo> {
   Widget build(BuildContext context) {
     return Container(
       child: Image.asset(
-        'images/logo/logo.png',
+        'assets/images/logo/logo.png',
         fit: BoxFit.cover,
         height: double.infinity,
         width: double.infinity,
