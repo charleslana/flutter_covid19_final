@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 class ApiCovid {
   static const _baseUrl = 'https://disease.sh/v3/covid-19';
+
   final formatNumber = new FormatNumber();
 
   late String casesAll;
@@ -14,13 +15,6 @@ class ApiCovid {
   late List<FlSpot> casesGlobal = [];
   late List<FlSpot> deathsGlobal = [];
   late List<FlSpot> recoveredGlobal = [];
-
-  late String casesBrazil;
-  late String deathsBrazil;
-  late String recoveredBrazil;
-  late String casesTodayBrazil;
-  late String deathsTodayBrazil;
-  late String recoveredTodayBrazil;
 
   late String vaccines;
 
@@ -106,21 +100,13 @@ class ApiCovid {
 
       final data = json.decode(response.body);
 
-      casesBrazil = formatNumber.get(data['cases']);
-      deathsBrazil = formatNumber.get(data['deaths']);
-      recoveredBrazil = formatNumber.get(data['recovered']);
-
-      casesTodayBrazil = formatNumber.get(data['todayCases']);
-      deathsTodayBrazil = formatNumber.get(data['todayDeaths']);
-      recoveredTodayBrazil = formatNumber.get(data['todayRecovered']);
-
       return [
-        casesBrazil,
-        deathsBrazil,
-        recoveredBrazil,
-        casesTodayBrazil,
-        deathsTodayBrazil,
-        recoveredTodayBrazil,
+        formatNumber.get(data['cases']),
+        formatNumber.get(data['deaths']),
+        formatNumber.get(data['recovered']),
+        formatNumber.get(data['todayCases']),
+        formatNumber.get(data['todayDeaths']),
+        formatNumber.get(data['todayRecovered']),
       ];
     } catch (error) {
       return null;
