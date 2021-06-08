@@ -380,7 +380,7 @@ class _IndexesState extends State<Indexes> {
                                           Container(
                                             width: 10,
                                             height: 10,
-                                            margin: EdgeInsets.all(10),
+                                            margin: EdgeInsets.all(5),
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(2.0),
@@ -413,7 +413,7 @@ class _IndexesState extends State<Indexes> {
                                           Container(
                                             width: 10,
                                             height: 10,
-                                            margin: EdgeInsets.all(10),
+                                            margin: EdgeInsets.all(5),
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(2.0),
@@ -438,7 +438,7 @@ class _IndexesState extends State<Indexes> {
                                       ),
                                     ),
                                     Expanded(
-                                      flex: 3,
+                                      flex: 4,
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -446,7 +446,7 @@ class _IndexesState extends State<Indexes> {
                                           Container(
                                             width: 10,
                                             height: 10,
-                                            margin: EdgeInsets.all(10),
+                                            margin: EdgeInsets.all(5),
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(2.0),
