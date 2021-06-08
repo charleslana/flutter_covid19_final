@@ -91,57 +91,6 @@ class _IndexesState extends State<Indexes> {
     setState(() {
       _filter = value;
     });
-    Navigator.of(context).pop();
-  }
-
-  _options() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Escolha um tipo de índice da covid-19.'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: [
-                RadioListTile<IndexesFilter>(
-                  title: Text('Gráfico global'),
-                  value: IndexesFilter.globalGraphics,
-                  groupValue: _filter,
-                  onChanged: (IndexesFilter? value) {
-                    _changeFilter(value);
-                  },
-                ),
-                RadioListTile<IndexesFilter>(
-                  title: Text('Números globais'),
-                  value: IndexesFilter.globalNumbers,
-                  groupValue: _filter,
-                  onChanged: (IndexesFilter? value) {
-                    _changeFilter(value);
-                  },
-                ),
-                Divider(),
-                RadioListTile<IndexesFilter>(
-                  title: Text('Números no Brasil'),
-                  value: IndexesFilter.brazilData,
-                  groupValue: _filter,
-                  onChanged: (IndexesFilter? value) {
-                    _changeFilter(value);
-                  },
-                ),
-                RadioListTile<IndexesFilter>(
-                  title: Text('Vacinas no Brasil'),
-                  value: IndexesFilter.brazilVaccine,
-                  groupValue: _filter,
-                  onChanged: (IndexesFilter? value) {
-                    _changeFilter(value);
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
   }
 
   LineChartData dataGlobal() {
@@ -288,6 +237,8 @@ class _IndexesState extends State<Indexes> {
     ];
   }
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -303,7 +254,7 @@ class _IndexesState extends State<Indexes> {
             IconButton(
               icon: Icon(Icons.more_vert, color: Colors.white),
               tooltip: 'Opções',
-              onPressed: () => _options(),
+              onPressed: () => _scaffoldKey.currentState!.openEndDrawer(),
             ),
           ],
         ),
@@ -311,6 +262,81 @@ class _IndexesState extends State<Indexes> {
           height: height,
           child: Menu(
             option: '/indexes',
+          ),
+        ),
+        key: _scaffoldKey,
+        endDrawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              Container(
+                height: 60,
+                child: DrawerHeader(
+                  child: Text(
+                    'Escolha um tipo de índice da covid-19',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Color(0xff65c1bd),
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.navigate_next),
+                title: Text(
+                  'Gráfico global',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                onTap: () {
+                  _scaffoldKey.currentState!.openDrawer();
+                  _changeFilter(IndexesFilter.globalGraphics);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.navigate_next),
+                title: Text(
+                  'Números globais',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                onTap: () {
+                  _scaffoldKey.currentState!.openDrawer();
+                  _changeFilter(IndexesFilter.globalNumbers);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.navigate_next),
+                title: Text(
+                  'Números no Brasil',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                onTap: () {
+                  _scaffoldKey.currentState!.openDrawer();
+                  _changeFilter(IndexesFilter.brazilData);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.navigate_next),
+                title: Text(
+                  'Vacinas no Brasil',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                onTap: () {
+                  _scaffoldKey.currentState!.openDrawer();
+                  _changeFilter(IndexesFilter.brazilVaccine);
+                },
+              ),
+            ],
           ),
         ),
         body: _isLoading

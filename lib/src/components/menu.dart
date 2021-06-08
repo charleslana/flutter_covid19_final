@@ -166,6 +166,9 @@ class Menu extends StatelessWidget {
           ),
         ],
       ),
+      actions: [
+        Container(),
+      ],
     );
   }
 }
