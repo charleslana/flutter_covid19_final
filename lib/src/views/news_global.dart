@@ -34,7 +34,7 @@ class _NewsGlobalState extends State<NewsGlobal> {
   }
 
   Future<dynamic> _getNews() async {
-    final data = await ApiNews().getAll();
+    final data = await ApiNews().getByType('Global');
     if (data == null) {
       return _alert();
     }

@@ -36,7 +36,7 @@ class _VaccinationState extends State<Vaccination> {
   }
 
   Future<dynamic> _getNews() async {
-    final data = await ApiNews().getAll();
+    final data = await ApiNews().getByType('Vacinação');
     if (data == null) {
       return _alert();
     }

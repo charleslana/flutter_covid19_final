@@ -36,7 +36,7 @@ class _NewsLocalState extends State<NewsLocal> {
   }
 
   Future<dynamic> _getNews() async {
-    final data = await ApiNews().getAll();
+    final data = await ApiNews().getByType('Local');
     if (data == null) {
       return _alert();
     }
