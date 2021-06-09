@@ -270,7 +270,7 @@ class _IndexesState extends State<Indexes> {
             padding: EdgeInsets.zero,
             children: [
               Container(
-                height: 60,
+                height: 80,
                 child: DrawerHeader(
                   child: Text(
                     'Escolha um tipo de índice da covid-19',
