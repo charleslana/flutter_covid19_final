@@ -10,37 +10,40 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        RotatedCorner(
-          alignment: BadgeAlignment.topRight,
-          sizeWidth: 200,
-          sizeHeight: 200,
-        ),
-        RotatedCorner(
-          alignment: BadgeAlignment.bottomLeft,
-          sizeWidth: 100,
-          sizeHeight: 100,
-        ),
-        Container(
-          child: GridView.count(
-            crossAxisCount: 2,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 4,
-            padding: EdgeInsets.all(8),
-            shrinkWrap: true,
-            children: List.generate(
-              _options.length,
-              (index) {
-                return Center(
-                  child:
-                      GridOptionCard(option: _options.values.elementAt(index)),
-                );
-              },
+    return Container(
+      decoration: BoxDecoration(color: Colors.white),
+      child: Stack(
+        children: [
+          RotatedCorner(
+            alignment: BadgeAlignment.topRight,
+            sizeWidth: 200,
+            sizeHeight: 200,
+          ),
+          RotatedCorner(
+            alignment: BadgeAlignment.bottomLeft,
+            sizeWidth: 100,
+            sizeHeight: 100,
+          ),
+          Container(
+            child: GridView.count(
+              crossAxisCount: 2,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 4,
+              padding: EdgeInsets.all(8),
+              shrinkWrap: true,
+              children: List.generate(
+                _options.length,
+                (index) {
+                  return Center(
+                    child: GridOptionCard(
+                        option: _options.values.elementAt(index)),
+                  );
+                },
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
