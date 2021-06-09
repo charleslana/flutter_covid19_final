@@ -8,10 +8,6 @@ class ApiCovid {
 
   final formatNumber = new FormatNumber();
 
-  late String casesAll;
-  late String deathsAll;
-  late String recoveredAll;
-
   late List<FlSpot> casesGlobal = [];
   late List<FlSpot> deathsGlobal = [];
   late List<FlSpot> recoveredGlobal = [];
@@ -28,14 +24,10 @@ class ApiCovid {
 
       final data = json.decode(response.body);
 
-      casesAll = formatNumber.get(data['cases']);
-      deathsAll = formatNumber.get(data['deaths']);
-      recoveredAll = formatNumber.get(data['recovered']);
-
       return [
-        casesAll,
-        deathsAll,
-        recoveredAll,
+        formatNumber.get(data['cases']),
+        formatNumber.get(data['deaths']),
+        formatNumber.get(data['recovered']),
       ];
     } catch (error) {
       return null;
@@ -58,7 +50,7 @@ class ApiCovid {
       late int count = 0;
 
       dataCases.forEach((key, value) {
-        casesGlobal.add(FlSpot(count.toDouble(), value));
+        casesGlobal.add(FlSpot(count.toDouble(), value.toDouble()));
         count++;
       });
 
@@ -67,7 +59,7 @@ class ApiCovid {
       count = 0;
 
       dataDeaths.forEach((key, value) {
-        deathsGlobal.add(FlSpot(count.toDouble(), value));
+        deathsGlobal.add(FlSpot(count.toDouble(), value.toDouble()));
         count++;
       });
 
@@ -76,7 +68,7 @@ class ApiCovid {
       count = 0;
 
       dataRecovered.forEach((key, value) {
-        recoveredGlobal.add(FlSpot(count.toDouble(), value));
+        recoveredGlobal.add(FlSpot(count.toDouble(), value.toDouble()));
         count++;
       });
 
