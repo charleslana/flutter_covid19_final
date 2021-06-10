@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_covid19_final/src/routes/app_routes.dart';
 import 'package:flutter_covid19_final/src/views/care_well_being.dart';
 import 'package:flutter_covid19_final/src/views/guidelines_oms.dart';
@@ -12,6 +13,12 @@ import 'package:flutter_covid19_final/src/views/splashscreen.dart';
 import 'package:flutter_covid19_final/src/views/vaccination.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    statusBarBrightness: Brightness.dark,
+  ));
+
   runApp(MyApp());
 }
 

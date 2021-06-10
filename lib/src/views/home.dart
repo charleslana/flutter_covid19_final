@@ -10,10 +10,14 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: Colors.white),
-      child: Stack(
+    return Scaffold(
+      body: Stack(
         children: [
+          Container(
+            decoration: BoxDecoration(color: Colors.white),
+            width: double.infinity,
+            height: double.infinity,
+          ),
           RotatedCorner(
             alignment: BadgeAlignment.topRight,
             sizeWidth: 200,
@@ -24,7 +28,7 @@ class Home extends StatelessWidget {
             sizeWidth: 100,
             sizeHeight: 100,
           ),
-          Container(
+          Center(
             child: GridView.count(
               crossAxisCount: 2,
               crossAxisSpacing: 8,
