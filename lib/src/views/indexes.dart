@@ -1,14 +1,18 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_covid19_final/src/components/alert_error.dart';
 import 'package:flutter_covid19_final/src/components/menu.dart';
 import 'package:flutter_covid19_final/src/components/sliver_grid_container.dart';
 import 'package:flutter_covid19_final/src/controllers/api_covid.dart';
 import 'package:flutter_covid19_final/src/enum/indexes_filter.dart';
+import 'package:flutter_covid19_final/src/models/covid_country.dart';
+import 'package:flutter_covid19_final/src/models/covid_history.dart';
+import 'package:flutter_covid19_final/src/models/covid_vaccine.dart';
+import 'package:flutter_covid19_final/src/models/covid_world_wide.dart';
 import 'package:flutter_covid19_final/src/models/grid_indexes.dart';
 import 'package:flutter_covid19_final/src/routes/app_routes.dart';
 import 'package:flutter_covid19_final/src/utils/last_month.dart';
-import 'package:intl/intl.dart';
 
 class Indexes extends StatefulWidget {
   const Indexes({Key? key}) : super(key: key);
@@ -21,24 +25,36 @@ class _IndexesState extends State<Indexes> {
   final height = AppBar().preferredSize.height;
   final getYear = DateFormat.y().format(DateTime.now());
   final title = 'Índices '.toUpperCase();
-  final apiCovid = new ApiCovid();
 
-  late List<String> dataAll = [];
-  late List<String> dataBrazil = [];
+  late Future<CovidHistory> _futureCovidHistory;
+  late Future<CovidWorldWide> _futureCovidWorldWide;
+  late Future<CovidCountry> _futureCovidByCountry;
+  late Future<CovidVaccine> _futureCovidVaccine;
 
-  late List<FlSpot> casesGlobal = [];
-  late List<FlSpot> deathsGlobal = [];
-  late List<FlSpot> recoveredGlobal = [];
+  late List<FlSpot> _casesGlobal = [];
+  late List<FlSpot> _deathsGlobal = [];
+  late List<FlSpot> _recoveredGlobal = [];
 
-  late String vaccinesBrazil;
+  late String _casesTotal;
+  late String _deathsTotal;
+  late String _recoveredTotal;
+
+  late String _countryCases;
+  late String _countryDeaths;
+  late String _countryRecovered;
+  late String _todayCountryCases;
+  late String _todayCountryDeaths;
+  late String _todayCountryRecovered;
+
+  late String _vaccinesBrazil;
 
   bool _isLoading = true;
-
   IndexesFilter? _filter = IndexesFilter.globalGraphics;
 
   @override
   void initState() {
     super.initState();
+
     _fetchDataCovid();
   }
 
@@ -52,39 +68,63 @@ class _IndexesState extends State<Indexes> {
   }
 
   _fetchDataCovid() async {
-    final dataWorldWide = await apiCovid.getDataWorldWide();
-    if (dataWorldWide == null) {
-      return _alert();
-    }
+    _futureCovidHistory = ApiCovid().fetchCovidHistory();
+    _futureCovidWorldWide = ApiCovid().fetchCovidWorldWide();
+    _futureCovidByCountry = ApiCovid().fetchCovidByCountry('brazil');
+    _futureCovidVaccine = ApiCovid().fetchCovidVaccine();
 
-    dataWorldWide.forEach((value) => dataAll.add(value));
+    late double count = 0;
+    final formatter = NumberFormat('###,###.###', 'pt_BR');
 
-    final dataHistory = await apiCovid.getDataHistory();
-    if (dataHistory == null) {
-      return _alert();
-    }
+    await _futureCovidHistory.then((response) {
+      response.cases.forEach((key, value) => {
+            _casesGlobal.add(FlSpot(count, value.toDouble())),
+            count++,
+          });
 
-    casesGlobal = dataHistory[0];
-    deathsGlobal = dataHistory[1];
-    recoveredGlobal = dataHistory[2];
+      count = 0;
 
-    final dataByCountry = await apiCovid.getDataByCountry();
-    if (dataByCountry == null) {
-      return _alert();
-    }
+      response.deaths.forEach((key, value) => {
+            _deathsGlobal.add(FlSpot(count, value.toDouble())),
+            count++,
+          });
 
-    dataByCountry.forEach((value) => dataBrazil.add(value));
+      count = 0;
 
-    final dataVaccinesBrazil = await apiCovid.getDataVaccine();
-    if (dataVaccinesBrazil == null) {
-      return _alert();
-    }
+      response.recovered.forEach((key, value) => {
+            _recoveredGlobal.add(FlSpot(count, value.toDouble())),
+            count++,
+          });
+    }).catchError((onError) => _alert());
 
-    vaccinesBrazil = dataVaccinesBrazil;
+    await _futureCovidWorldWide
+        .then((response) => {
+              _casesTotal = formatter.format(response.cases),
+              _deathsTotal = formatter.format(response.deaths),
+              _recoveredTotal = formatter.format(response.recovered),
+            })
+        .catchError((onError) => _alert());
 
-    setState(() {
-      _isLoading = false;
-    });
+    await _futureCovidByCountry
+        .then((response) => {
+              _countryCases = formatter.format(response.cases),
+              _countryDeaths = formatter.format(response.deaths),
+              _countryRecovered = formatter.format(response.recovered),
+              _todayCountryCases = formatter.format(response.todayCases),
+              _todayCountryDeaths = formatter.format(response.todayDeaths),
+              _todayCountryRecovered =
+                  formatter.format(response.todayRecovered),
+            })
+        .catchError((onError) => _alert());
+
+    await _futureCovidVaccine.then((response) {
+      response.list[27]['timeline'].forEach((key, value) => {
+            _vaccinesBrazil = formatter.format(value),
+          });
+      setState(() {
+        _isLoading = false;
+      });
+    }).catchError((onError) => _alert());
   }
 
   _changeFilter(IndexesFilter? value) {
@@ -183,7 +223,7 @@ class _IndexesState extends State<Indexes> {
 
   List<LineChartBarData> linesBarDataGlobal() {
     final lineChartBarDataCases = LineChartBarData(
-      spots: casesGlobal,
+      spots: _casesGlobal,
       isCurved: true,
       colors: [
         Color(0xff4af699),
@@ -199,7 +239,7 @@ class _IndexesState extends State<Indexes> {
     );
 
     final lineChartBarDataDeaths = LineChartBarData(
-      spots: deathsGlobal,
+      spots: _deathsGlobal,
       isCurved: true,
       colors: [
         Color(0xffdb4437),
@@ -215,7 +255,7 @@ class _IndexesState extends State<Indexes> {
     );
 
     final lineChartBarDataRecovered = LineChartBarData(
-      spots: recoveredGlobal,
+      spots: _recoveredGlobal,
       isCurved: true,
       colors: [
         Color(0xfff4b400),
@@ -530,17 +570,17 @@ class _IndexesState extends State<Indexes> {
                         slivers: [
                           GridIndexes(
                             title: 'Casos totais global',
-                            text: dataAll[0],
+                            text: _casesTotal,
                             color: Colors.green[100],
                           ),
                           GridIndexes(
                             title: 'Mortes totais global',
-                            text: dataAll[1],
+                            text: _deathsTotal,
                             color: Colors.red[200],
                           ),
                           GridIndexes(
                             title: 'Recuperados totais global',
-                            text: dataAll[2],
+                            text: _recoveredTotal,
                             color: Colors.yellow[300],
                           ),
                         ],
@@ -551,32 +591,32 @@ class _IndexesState extends State<Indexes> {
                             slivers: [
                               GridIndexes(
                                 title: 'Casos totais no Brasil',
-                                text: dataBrazil[0],
+                                text: _countryCases,
                                 color: Colors.green[100],
                               ),
                               GridIndexes(
                                 title: 'Mortes totais no Brasil',
-                                text: dataBrazil[1],
+                                text: _countryDeaths,
                                 color: Colors.red[200],
                               ),
                               GridIndexes(
                                 title: 'Recuperados totais no Brasil',
-                                text: dataBrazil[2],
+                                text: _countryRecovered,
                                 color: Colors.yellow[300],
                               ),
                               GridIndexes(
                                 title: 'Casos por dia no Brasil',
-                                text: dataBrazil[3],
+                                text: _todayCountryCases,
                                 color: Colors.green[100],
                               ),
                               GridIndexes(
                                 title: 'Mortes por dia no Brasil.',
-                                text: dataBrazil[4],
+                                text: _todayCountryDeaths,
                                 color: Colors.red[200],
                               ),
                               GridIndexes(
                                 title: 'Recuperados por dia no Brasil.',
-                                text: dataBrazil[5],
+                                text: _todayCountryRecovered,
                                 color: Colors.yellow[300],
                               ),
                             ],
@@ -586,7 +626,7 @@ class _IndexesState extends State<Indexes> {
                             slivers: [
                               GridIndexes(
                                 title: 'Vacinas efetivadas no Brasil',
-                                text: vaccinesBrazil,
+                                text: _vaccinesBrazil,
                                 color: Colors.green[100],
                               ),
                             ],
