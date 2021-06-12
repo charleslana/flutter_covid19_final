@@ -4,7 +4,8 @@ class Bubble extends StatelessWidget {
   final String message;
   final bool isMe;
 
-  const Bubble({required this.message, required this.isMe});
+  const Bubble({Key? key, required this.message, required this.isMe})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class Bubble extends StatelessWidget {
             bottomLeft: Radius.circular(10.0),
             bottomRight: Radius.circular(0),
           );
+
     return Column(
       crossAxisAlignment: align,
       children: [

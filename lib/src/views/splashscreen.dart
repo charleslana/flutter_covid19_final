@@ -53,7 +53,6 @@ class _SplashscreenState extends State<Splashscreen> {
                       child: Text(
                         'Notícias e Informações Covid 19'.toUpperCase(),
                         style: TextStyle(
-                          fontSize: 60,
                           fontWeight: FontWeight.bold,
                           fontStyle: FontStyle.normal,
                         ),

@@ -121,6 +121,7 @@ class _IndexesState extends State<Indexes> {
       response.list[27]['timeline'].forEach((key, value) => {
             _vaccinesBrazil = formatter.format(value),
           });
+
       setState(() {
         _isLoading = false;
       });
@@ -136,6 +137,7 @@ class _IndexesState extends State<Indexes> {
   LineChartData dataGlobal() {
     initializeDateFormatting('pt-br');
     final date = DateTime.now();
+
     return LineChartData(
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(
@@ -576,7 +578,6 @@ class _IndexesState extends State<Indexes> {
                             child: Text(
                               _casesTotal,
                               style: TextStyle(
-                                fontSize: 50,
                                 color: Colors.green,
                               ),
                             ),
@@ -593,7 +594,6 @@ class _IndexesState extends State<Indexes> {
                             child: Text(
                               _deathsTotal,
                               style: TextStyle(
-                                fontSize: 50,
                                 color: Color(0xffdb4437),
                               ),
                             ),
@@ -610,7 +610,6 @@ class _IndexesState extends State<Indexes> {
                             child: Text(
                               _recoveredTotal,
                               style: TextStyle(
-                                fontSize: 50,
                                 color: Color(0xfff4b400),
                               ),
                             ),

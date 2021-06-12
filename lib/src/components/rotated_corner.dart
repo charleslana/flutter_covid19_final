@@ -8,11 +8,12 @@ class RotatedCorner extends StatelessWidget {
   final int color;
 
   const RotatedCorner({
+    Key? key,
     required this.alignment,
     required this.sizeWidth,
     required this.sizeHeight,
     required this.color,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

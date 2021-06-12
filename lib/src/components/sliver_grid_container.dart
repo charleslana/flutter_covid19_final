@@ -4,6 +4,7 @@ import 'package:flutter_covid19_final/src/models/grid_indexes.dart';
 class SliverGridContainer extends StatelessWidget {
   final List<GridIndexes> slivers;
   final int count;
+
   const SliverGridContainer(
       {Key? key, required this.count, required this.slivers})
       : super(key: key);

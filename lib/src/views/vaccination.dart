@@ -44,7 +44,7 @@ class _VaccinationState extends State<Vaccination> {
     _futureNews = ApiNews().fetchAll();
 
     await _futureNews.then((response) {
-      final Map<String, dynamic> data = new SplayTreeMap<String, dynamic>.from(
+      final Map<String, dynamic> data = SplayTreeMap<String, dynamic>.from(
           response.map, (a, b) => b.compareTo(a));
       data.forEach(
         (key, value) => {

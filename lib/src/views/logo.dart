@@ -102,56 +102,6 @@ class _LogoState extends State<Logo> {
               ],
             ),
           ),
-          // Center(
-          //   child: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.center,
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: [
-          //       SizedBox(
-          //         width: 200,
-          //         child: Image.asset('assets/images/logo/logo.png'),
-          //       ),
-          //       Padding(
-          //         padding: EdgeInsets.all(30),
-          //         child: SizedBox(
-          //           width: double.infinity,
-          //           child: FittedBox(
-          //             fit: BoxFit.cover,
-          //             child: Text(
-          //               'Flutter',
-          //               style: TextStyle(
-          //                 fontSize: 80,
-          //                 fontWeight: FontWeight.bold,
-          //                 fontStyle: FontStyle.normal,
-          //               ),
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //       Padding(
-          //         padding: EdgeInsets.all(30),
-          //         child: SizedBox(
-          //           width: double.infinity,
-          //           child: FittedBox(
-          //             fit: BoxFit.cover,
-          //             child: Text(
-          //               'Birds',
-          //               style: TextStyle(
-          //                 fontSize: 60,
-          //                 fontWeight: FontWeight.bold,
-          //                 fontStyle: FontStyle.normal,
-          //               ),
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //       SizedBox(
-          //         width: 200,
-          //         child: Image.asset('assets/images/logo/logo.png'),
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ],
       ),
     );
