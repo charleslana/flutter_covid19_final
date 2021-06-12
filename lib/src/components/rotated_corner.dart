@@ -5,17 +5,20 @@ class RotatedCorner extends StatelessWidget {
   final BadgeAlignment alignment;
   final double sizeWidth;
   final double sizeHeight;
+  final int color;
 
-  const RotatedCorner(
-      {required this.alignment,
-      required this.sizeWidth,
-      required this.sizeHeight});
+  const RotatedCorner({
+    required this.alignment,
+    required this.sizeWidth,
+    required this.sizeHeight,
+    required this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       foregroundDecoration: RotatedCornerDecoration(
-        color: Color(0xff65c1bd),
+        color: Color(color),
         geometry: BadgeGeometry(
           width: sizeWidth,
           height: sizeHeight,

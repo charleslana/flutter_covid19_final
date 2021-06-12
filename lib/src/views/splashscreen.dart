@@ -27,11 +27,13 @@ class _SplashscreenState extends State<Splashscreen> {
             alignment: BadgeAlignment.topLeft,
             sizeWidth: 200,
             sizeHeight: 200,
+            color: 0xff65c1bd,
           ),
           RotatedCorner(
             alignment: BadgeAlignment.bottomRight,
             sizeWidth: 100,
             sizeHeight: 100,
+            color: 0xff65c1bd,
           ),
           Center(
             child: Column(

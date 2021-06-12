@@ -1,6 +1,5 @@
 enum IndexesFilter {
-  globalGraphics,
-  globalNumbers,
-  brazilData,
-  brazilVaccine,
+  dataGlobal,
+  dataBrazil,
+  dataTodayBrazil,
 }

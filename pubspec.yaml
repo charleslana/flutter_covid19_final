@@ -82,11 +82,19 @@ flutter:
     - family: Abel
       fonts:
         - asset: assets/fonts/Abel-Regular.ttf
+    
+    - family: Retroyal
+      fonts:
+        - asset: assets/fonts/Retroyal-Thin.ttf
+
+    - family: Skorid
+      fonts:
+        - asset: assets/fonts/Skorid-Regular.ttf
+        
       
   assets:
     - assets/images/icons/
     - assets/images/logo/
-    - assets/images/menu/
     - assets/images/others/
 
 flutter_icons:
