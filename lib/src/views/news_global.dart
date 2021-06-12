@@ -1,9 +1,11 @@
+import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_covid19_final/src/components/alert_error.dart';
 import 'package:flutter_covid19_final/src/components/container_option_card.dart';
 import 'package:flutter_covid19_final/src/components/menu.dart';
 import 'package:flutter_covid19_final/src/controllers/api_news.dart';
 import 'package:flutter_covid19_final/src/models/news.dart';
+import 'package:flutter_covid19_final/src/models/news_map.dart';
 import 'package:flutter_covid19_final/src/routes/app_routes.dart';
 
 class NewsGlobal extends StatefulWidget {
@@ -13,15 +15,18 @@ class NewsGlobal extends StatefulWidget {
 
 class _NewsGlobalState extends State<NewsGlobal> {
   final height = AppBar().preferredSize.height;
-  Map<String, News> _options = {};
   final title = 'Notícias Globais'.toUpperCase();
+
+  late Future<NewsMap> _futureNews;
+
+  late Map<String, News> _news = {};
 
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _getNews();
+    _fetchNews();
   }
 
   _alert() {
@@ -33,27 +38,35 @@ class _NewsGlobalState extends State<NewsGlobal> {
     ).then((value) => Navigator.of(context).pushNamed(AppRoutes.HOME));
   }
 
-  Future<dynamic> _getNews() async {
-    final data = await ApiNews().getByType('Global');
-    if (data == null) {
-      return _alert();
-    }
-    data.forEach((key, values) {
-      _options.putIfAbsent(
-        key as String,
-        () => News(
-          id: key,
-          title: values['title'],
-          message: values['message'],
-          urlImage: values['urlImage'],
-          source: values['source'],
-          type: values['type'],
-        ),
+  _fetchNews() async {
+    _futureNews = ApiNews().fetchAll();
+
+    await _futureNews.then((response) {
+      final Map<String, dynamic> data = new SplayTreeMap<String, dynamic>.from(
+          response.map, (a, b) => b.compareTo(a));
+      data.forEach(
+        (key, value) => {
+          if (value['type'] == 'Global')
+            {
+              _news.putIfAbsent(
+                key,
+                () => News(
+                  id: key,
+                  title: value['title'],
+                  message: value['message'],
+                  urlImage: value['urlImage'],
+                  source: value['source'],
+                  type: value['type'],
+                ),
+              ),
+            }
+        },
       );
-    });
-    setState(() {
-      _isLoading = false;
-    });
+
+      setState(() {
+        _isLoading = false;
+      });
+    }).catchError((onError) => _alert());
   }
 
   @override
@@ -79,10 +92,10 @@ class _NewsGlobalState extends State<NewsGlobal> {
                 child: CircularProgressIndicator(),
               )
             : ListView.builder(
-                itemCount: _options.length,
+                itemCount: _news.length,
                 itemBuilder: (context, index) {
                   return ContainerOptionCard(
-                    option: _options.values.elementAt(index),
+                    option: _news.values.elementAt(index),
                   );
                 },
               ),
