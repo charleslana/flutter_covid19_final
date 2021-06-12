@@ -2,7 +2,7 @@
     package="com.example.flutter_covid19_final">
    <uses-permission android:name="android.permission.INTERNET" /> 
    <application
-        android:label="flutter_covid19_final"
+        android:label="FlutterBirds Covid19"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
