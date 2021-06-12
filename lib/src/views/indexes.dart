@@ -67,7 +67,7 @@ class _IndexesState extends State<Indexes> {
     ).then((value) => Navigator.of(context).pushNamed(AppRoutes.HOME));
   }
 
-  _fetchDataCovid() async {
+  void _fetchDataCovid() async {
     _futureCovidHistory = ApiCovid().fetchCovidHistory();
     _futureCovidWorldWide = ApiCovid().fetchCovidWorldWide();
     _futureCovidByCountry = ApiCovid().fetchCovidByCountry('brazil');
@@ -126,12 +126,6 @@ class _IndexesState extends State<Indexes> {
         _isLoading = false;
       });
     }).catchError((onError) => _alert());
-  }
-
-  _changeFilter(IndexesFilter? value) {
-    setState(() {
-      _filter = value;
-    });
   }
 
   LineChartData dataGlobal() {
@@ -341,8 +335,10 @@ class _IndexesState extends State<Indexes> {
                           : FontWeight.normal),
                 ),
                 onTap: () {
+                  setState(() {
+                    _filter = IndexesFilter.dataGlobal;
+                  });
                   _scaffoldKey.currentState!.openDrawer();
-                  _changeFilter(IndexesFilter.dataGlobal);
                 },
               ),
               ListTile(
@@ -356,8 +352,10 @@ class _IndexesState extends State<Indexes> {
                           : FontWeight.normal),
                 ),
                 onTap: () {
+                  setState(() {
+                    _filter = IndexesFilter.dataBrazil;
+                  });
                   _scaffoldKey.currentState!.openDrawer();
-                  _changeFilter(IndexesFilter.dataBrazil);
                 },
               ),
               ListTile(
@@ -371,8 +369,10 @@ class _IndexesState extends State<Indexes> {
                           : FontWeight.normal),
                 ),
                 onTap: () {
+                  setState(() {
+                    _filter = IndexesFilter.dataTodayBrazil;
+                  });
                   _scaffoldKey.currentState!.openDrawer();
-                  _changeFilter(IndexesFilter.dataTodayBrazil);
                 },
               ),
             ],

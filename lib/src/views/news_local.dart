@@ -40,7 +40,7 @@ class _NewsLocalState extends State<NewsLocal> {
     ).then((value) => Navigator.of(context).pushNamed(AppRoutes.HOME));
   }
 
-  _fetchNews() async {
+  void _fetchNews() async {
     _futureNews = ApiNews().fetchAll();
 
     await _futureNews.then((response) {

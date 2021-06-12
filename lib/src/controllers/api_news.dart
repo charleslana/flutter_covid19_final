@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class ApiNews {
   static const _baseUrl =
-      'https://flutterbirds-covid19-default-rtdb.firebaseio.com/';
+      'https://flutterbirds-covid19-default-rtdb.firebaseio.com';
 
   Future<NewsMap> fetchAll() async {
     final response = await http.get(Uri.parse('$_baseUrl/news.json'));
