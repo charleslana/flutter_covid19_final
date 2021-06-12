@@ -578,6 +578,7 @@ class _IndexesState extends State<Indexes> {
                             child: Text(
                               _casesTotal,
                               style: TextStyle(
+                                fontSize: 50,
                                 color: Colors.green,
                               ),
                             ),
@@ -594,6 +595,7 @@ class _IndexesState extends State<Indexes> {
                             child: Text(
                               _deathsTotal,
                               style: TextStyle(
+                                fontSize: 50,
                                 color: Color(0xffdb4437),
                               ),
                             ),
@@ -610,6 +612,7 @@ class _IndexesState extends State<Indexes> {
                             child: Text(
                               _recoveredTotal,
                               style: TextStyle(
+                                fontSize: 50,
                                 color: Color(0xfff4b400),
                               ),
                             ),
