@@ -643,7 +643,7 @@ class _IndexesState extends State<Indexes> {
                           GridIndexes(
                             title: 'Vacinas efetivadas no Brasil',
                             text: _vaccinesBrazil,
-                            color: Color(0xff78c2e1),
+                            color: Colors.blue[100],
                           ),
                         ],
                       )
