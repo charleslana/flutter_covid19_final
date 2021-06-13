@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_covid19_final/src/components/rotated_corner.dart';
-import 'package:flutter_covid19_final/src/routes/app_routes.dart';
+import 'package:flutter_covid19_final/src/views/home.dart';
 import 'package:rotated_corner_decoration/rotated_corner_decoration.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -14,7 +14,8 @@ class _SplashscreenState extends State<Splashscreen> {
   void initState() {
     super.initState();
     Timer(Duration(seconds: 3), () {
-      Navigator.of(context).pushNamed(AppRoutes.HOME);
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (BuildContext context) => Home()));
     });
   }
 

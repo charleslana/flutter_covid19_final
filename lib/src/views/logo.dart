@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_covid19_final/src/components/rotated_corner.dart';
-import 'package:flutter_covid19_final/src/routes/app_routes.dart';
+import 'package:flutter_covid19_final/src/views/splashscreen.dart';
 import 'package:rotated_corner_decoration/rotated_corner_decoration.dart';
 import 'dart:math' as math;
 
@@ -15,7 +15,8 @@ class _LogoState extends State<Logo> {
   void initState() {
     super.initState();
     Timer(Duration(seconds: 2), () {
-      Navigator.of(context).pushNamed(AppRoutes.SPLASHSCREEN);
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (BuildContext context) => Splashscreen()));
     });
   }
 
