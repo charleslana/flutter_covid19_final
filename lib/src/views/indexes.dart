@@ -50,7 +50,6 @@ class _IndexesState extends State<Indexes> {
 
   bool _isLoading = true;
   IndexesFilter? _filter = IndexesFilter.dataGlobal;
-  bool isError = false;
 
   @override
   void initState() {
@@ -72,88 +71,61 @@ class _IndexesState extends State<Indexes> {
     late double count = 0;
     final formatter = NumberFormat('###,###.###', 'pt_BR');
 
-    if (!isError) {
-      _futureCovidHistory = ApiCovid().fetchCovidHistory();
-      await _futureCovidHistory.then((response) {
-        response.cases.forEach((key, value) => {
-              _casesGlobal.add(FlSpot(count, value.toDouble())),
-              count++,
-            });
+    _futureCovidHistory = ApiCovid().fetchCovidHistory();
+    _futureCovidWorldWide = ApiCovid().fetchCovidWorldWide();
+    _futureCovidByCountry = ApiCovid().fetchCovidByCountry('brazil');
+    _futureCovidVaccine = ApiCovid().fetchCovidVaccine();
 
-        count = 0;
+    await _futureCovidHistory.then((response) {
+      response.cases.forEach((key, value) => {
+            _casesGlobal.add(FlSpot(count, value.toDouble())),
+            count++,
+          });
 
-        response.deaths.forEach((key, value) => {
-              _deathsGlobal.add(FlSpot(count, value.toDouble())),
-              count++,
-            });
+      count = 0;
 
-        count = 0;
+      response.deaths.forEach((key, value) => {
+            _deathsGlobal.add(FlSpot(count, value.toDouble())),
+            count++,
+          });
 
-        response.recovered.forEach((key, value) => {
-              _recoveredGlobal.add(FlSpot(count, value.toDouble())),
-              count++,
-            });
-      }).catchError((onError) {
-        setState(() {
-          isError = true;
-        });
-        _alert();
+      count = 0;
+
+      response.recovered.forEach((key, value) => {
+            _recoveredGlobal.add(FlSpot(count, value.toDouble())),
+            count++,
+          });
+    }).catchError((onError) => _alert());
+
+    await _futureCovidWorldWide
+        .then((response) => {
+              _casesTotal = formatter.format(response.cases),
+              _deathsTotal = formatter.format(response.deaths),
+              _recoveredTotal = formatter.format(response.recovered),
+            })
+        .catchError((onError) => _alert());
+
+    await _futureCovidByCountry
+        .then((response) => {
+              _countryCases = formatter.format(response.cases),
+              _countryDeaths = formatter.format(response.deaths),
+              _countryRecovered = formatter.format(response.recovered),
+              _todayCountryCases = formatter.format(response.todayCases),
+              _todayCountryDeaths = formatter.format(response.todayDeaths),
+              _todayCountryRecovered =
+                  formatter.format(response.todayRecovered),
+            })
+        .catchError((onError) => _alert());
+
+    await _futureCovidVaccine.then((response) {
+      response.list[27]['timeline'].forEach((key, value) => {
+            _vaccinesBrazil = formatter.format(value),
+          });
+
+      setState(() {
+        _isLoading = false;
       });
-    }
-
-    if (!isError) {
-      _futureCovidWorldWide = ApiCovid().fetchCovidWorldWide();
-      await _futureCovidWorldWide
-          .then((response) => {
-                _casesTotal = formatter.format(response.cases),
-                _deathsTotal = formatter.format(response.deaths),
-                _recoveredTotal = formatter.format(response.recovered),
-              })
-          .catchError((onError) {
-        setState(() {
-          isError = true;
-        });
-        _alert();
-      });
-    }
-
-    if (!isError) {
-      _futureCovidByCountry = ApiCovid().fetchCovidByCountry('brazil');
-      await _futureCovidByCountry
-          .then((response) => {
-                _countryCases = formatter.format(response.cases),
-                _countryDeaths = formatter.format(response.deaths),
-                _countryRecovered = formatter.format(response.recovered),
-                _todayCountryCases = formatter.format(response.todayCases),
-                _todayCountryDeaths = formatter.format(response.todayDeaths),
-                _todayCountryRecovered =
-                    formatter.format(response.todayRecovered),
-              })
-          .catchError((onError) {
-        setState(() {
-          isError = true;
-        });
-        _alert();
-      });
-    }
-
-    if (!isError) {
-      _futureCovidVaccine = ApiCovid().fetchCovidVaccine();
-      await _futureCovidVaccine.then((response) {
-        response.list[27]['timeline'].forEach((key, value) => {
-              _vaccinesBrazil = formatter.format(value),
-            });
-
-        setState(() {
-          _isLoading = false;
-        });
-      }).catchError((onError) {
-        setState(() {
-          isError = true;
-        });
-        _alert();
-      });
-    }
+    }).catchError((onError) => _alert());
   }
 
   LineChartData dataGlobal() {
